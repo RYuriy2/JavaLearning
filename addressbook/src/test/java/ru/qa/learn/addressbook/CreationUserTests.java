@@ -12,7 +12,7 @@ public class CreationUserTests {
   private boolean acceptNextAlert = true;
   private StringBuffer verificationErrors = new StringBuffer();
 
-  @BeforeClass(alwaysRun = true)
+  @BeforeMethod(alwaysRun = true)
   public void setUp() throws Exception {
     driver = new ChromeDriver();
     baseUrl = "https://www.google.com/";
@@ -21,7 +21,7 @@ public class CreationUserTests {
   }
 
   @Test
-  public void testCreationUserTests() throws Exception {
+  public void testCreationUser() throws Exception {
     initCreationNewUser();
     fillUserData(new UserData("Михаил", "Михайлович", "Буслаев", "+79009009090", "test@test.com"));
     submitCreateNewUser();
