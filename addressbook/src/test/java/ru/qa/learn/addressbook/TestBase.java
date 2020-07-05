@@ -77,10 +77,51 @@ public class TestBase {
     }
 
     protected void deleteSelectedGroups() {
-      wd.findElement(By.xpath("(//input[@name='delete'])[2]")).click();
+      wd.findElement(By.xpath("(//input[@name='delete'])")).click();
     }
 
     protected void selectGroup() {
       wd.findElement(By.name("selected[]")).click();
+    }
+
+    protected void selectUser() {
+        wd.findElement(By.name("selected[]")).click();
+    }
+
+    protected void returnToHomePage() {
+      wd.findElement(By.linkText("home page")).click();
+    }
+
+    protected void submitCreateNewUser() {
+      wd.findElement(By.xpath("(//input[@name='submit'])[2]")).click();
+    }
+
+    protected void fillUserData(UserData userData) {
+      wd.findElement(By.name("firstname")).clear();
+      wd.findElement(By.name("firstname")).sendKeys(userData.getFirstname());
+      wd.findElement(By.name("middlename")).clear();
+      wd.findElement(By.name("middlename")).sendKeys(userData.getMidlname());
+      wd.findElement(By.name("lastname")).clear();
+      wd.findElement(By.name("lastname")).sendKeys(userData.getLastname());
+      wd.findElement(By.name("mobile")).clear();
+      wd.findElement(By.name("mobile")).sendKeys(userData.getPhoneNumber());
+      wd.findElement(By.name("email")).clear();
+      wd.findElement(By.name("email")).sendKeys(userData.getEmail());
+        }
+
+    protected void initCreationNewUser() {
+      wd.findElement(By.linkText("add new")).click();
+    }
+
+    protected void deleteSelectedUser() {
+      wd.findElement(By.xpath("//input[@value='Delete']")).click();
+    }
+
+    protected void gotoHomePage() {
+      wd.findElement(By.linkText("home")).click();
+    }
+
+    protected void closeAlertPopUp() {
+      wd.switchTo().alert().accept();
     }
 }
