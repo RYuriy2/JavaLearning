@@ -1,4 +1,4 @@
-package ru.qa.learn.addressbook;
+package ru.qa.learn.addressbook.model;
 
 public class UserData {
     private final String firstname;

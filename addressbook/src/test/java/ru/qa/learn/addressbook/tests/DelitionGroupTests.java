@@ -1,4 +1,4 @@
-package ru.qa.learn.addressbook;
+package ru.qa.learn.addressbook.tests;
 
 import org.testng.annotations.Test;
 
@@ -6,10 +6,10 @@ public class DelitionGroupTests extends TestBase {
 
   @Test
   public void testDelitionGroup() throws Exception {
-    gotoGroupPage();
-    selectGroup();
-    deleteSelectedGroups();
-    returnToGroupPage();
+    app.gotoGroupPage();
+    app.selectGroup();
+    app.deleteSelectedGroups();
+    app.returnToGroupPage();
   }
 
 }
