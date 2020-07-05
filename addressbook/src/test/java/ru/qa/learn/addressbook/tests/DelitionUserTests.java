@@ -6,11 +6,11 @@ public class DelitionUserTests extends TestBase {
 
   @Test
   public void testDelitionUser() throws Exception {
-    app.gotoHomePage();
-    app.selectUser();
-    app.deleteSelectedUser();
+    app.getNavigationHelper().gotoHomePage();
+    app.getUserHelper().selectUser();
+    app.getUserHelper().deleteSelectedUser();
     app.closeAlertPopUp();
-    app.gotoHomePage();
+    app.getNavigationHelper().gotoHomePage();
   }
 
 }
