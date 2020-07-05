@@ -8,14 +8,10 @@ import org.openqa.selenium.*;
 
 public class CreationUserTests {
   private WebDriver driver;
-  private String baseUrl;
-  private boolean acceptNextAlert = true;
-  private StringBuffer verificationErrors = new StringBuffer();
 
   @BeforeMethod(alwaysRun = true)
   public void setUp() throws Exception {
     driver = new ChromeDriver();
-    baseUrl = "https://www.google.com/";
     driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
     login("admin", "secret");
   }
@@ -66,10 +62,6 @@ public class CreationUserTests {
   public void tearDown() throws Exception {
     logout();
     driver.quit();
-    String verificationErrorString = verificationErrors.toString();
-    if (!"".equals(verificationErrorString)) {
-      fail(verificationErrorString);
-    }
   }
 
   private void logout() {
@@ -94,18 +86,4 @@ public class CreationUserTests {
     }
   }
 
-  private String closeAlertAndGetItsText() {
-    try {
-      Alert alert = driver.switchTo().alert();
-      String alertText = alert.getText();
-      if (acceptNextAlert) {
-        alert.accept();
-      } else {
-        alert.dismiss();
-      }
-      return alertText;
-    } finally {
-      acceptNextAlert = true;
-    }
-  }
 }
