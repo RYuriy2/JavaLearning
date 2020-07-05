@@ -1,9 +1,6 @@
 package ru.qa.learn.addressbook;
 
-import java.util.concurrent.TimeUnit;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.annotations.*;
-import org.openqa.selenium.*;
+import org.testng.annotations.Test;
 
 public class CreationUserTests extends TestBase {
 
