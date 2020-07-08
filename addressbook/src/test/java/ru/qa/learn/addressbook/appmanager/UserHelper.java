@@ -37,4 +37,12 @@ public class UserHelper extends HelperBase {
     public void deleteSelectedUser() {
         click(By.xpath("//input[@value='Delete']"));
     }
+
+    public void initEditUser(){
+        click(By.xpath("//img[@alt='Edit']"));
+    }
+
+    public void submitEditUser(){
+        click(By.xpath("//input[@name='update']"));
+    }
 }
