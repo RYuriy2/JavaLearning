@@ -51,4 +51,15 @@ public class UserHelper extends HelperBase {
     public void submitEditUser(){
         click(By.xpath("//input[@name='update']"));
     }
+
+    public void createUser(UserData user, boolean creation) {
+        initCreationNewUser();
+        fillUserData(user,creation);
+        submitCreateNewUser();
+        returnToHomePage();
+    }
+
+    public boolean isThereUser() {
+        return isElementPresent(By.xpath("//img[@alt='Edit']"));
+    }
 }
