@@ -8,10 +8,7 @@ public class CreationGroupTests extends TestBase {
   @Test
   public void testCreationGroup() throws Exception {
     app.getNavigationHelper().gotoGroupPage();
-    app.getGroupHelper().initGroupCreation();
-    app.getGroupHelper().fillGroupForm(new GroupData("testGroupnull", null, null));
-    app.getGroupHelper().submitGroupCreation();
-    app.getGroupHelper().returnToGroupPage();
+    app.getGroupHelper().createGroup(new GroupData("testGroupnull", null, null));
   }
 
 }
