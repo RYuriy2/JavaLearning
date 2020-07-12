@@ -3,7 +3,7 @@ package ru.qa.learn.addressbook.tests;
 import org.testng.annotations.Test;
 import ru.qa.learn.addressbook.model.GroupData;
 
-public class CreationGroupTests extends TestBase {
+public class GroupCreationTests extends TestBase {
 
   @Test
   public void testCreationGroup() throws Exception {

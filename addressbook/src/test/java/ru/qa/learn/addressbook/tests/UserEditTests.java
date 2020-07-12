@@ -3,7 +3,7 @@ package ru.qa.learn.addressbook.tests;
 import org.testng.annotations.Test;
 import ru.qa.learn.addressbook.model.UserData;
 
-public class EditUserTests extends TestBase {
+public class UserEditTests extends TestBase {
 
   @Test
   public void testEditUser() throws Exception {
