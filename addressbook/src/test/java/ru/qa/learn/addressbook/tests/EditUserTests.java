@@ -9,7 +9,7 @@ public class EditUserTests extends TestBase {
   public void testEditUser() throws Exception {
     app.getNavigationHelper().gotoHomePage();
     app.getUserHelper().initEditUser();
-    app.getUserHelper().fillUserData(new UserData("МихаилNew", "МихайловичNew", "БуслаевNew", "+79009009099", "testNew@test.com"));
+    app.getUserHelper().fillUserData(new UserData("МихаилNew", "МихайловичNew", "БуслаевNew", "+79009009099", "testNew@test.com", null),false);
     app.getUserHelper().submitEditUser();
     app.getUserHelper().returnToHomePage();
   }

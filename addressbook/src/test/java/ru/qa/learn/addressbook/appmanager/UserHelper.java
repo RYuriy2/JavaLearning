@@ -1,7 +1,10 @@
 package ru.qa.learn.addressbook.appmanager;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 import ru.qa.learn.addressbook.model.UserData;
 
 public class UserHelper extends HelperBase {
@@ -22,12 +25,15 @@ public class UserHelper extends HelperBase {
         click(By.xpath("(//input[@name='submit'])[2]"));
     }
 
-    public void fillUserData(UserData userData) {
+    public void fillUserData(UserData userData, boolean creation) {
         type(By.name("firstname"),userData.getFirstname());
         type(By.name("middlename"),userData.getMidlname());
         type(By.name("lastname"),userData.getLastname());
         type(By.name("mobile"),userData.getPhoneNumber());
         type(By.name("email"),userData.getEmail());
+        if (creation) {
+            new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(userData.getGroup());
+        } else Assert.assertFalse(isElementPresent(By.name("new_group")));
     }
 
     public void initCreationNewUser() {
