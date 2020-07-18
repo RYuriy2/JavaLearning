@@ -3,11 +3,19 @@ package ru.qa.learn.addressbook.appmanager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.qa.learn.addressbook.model.UserData;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class UserHelper extends HelperBase {
+
+    public int getUserCount() {
+        return wd.findElements(By.xpath("//img[@alt='Edit']")).size();
+    }
 
     public UserHelper(WebDriver wd) {
         super(wd);
@@ -61,5 +69,16 @@ public class UserHelper extends HelperBase {
 
     public boolean isThereUser() {
         return isElementPresent(By.xpath("//img[@alt='Edit']"));
+    }
+
+    public List<UserData> getUserList() {
+        List<UserData> groups = new ArrayList<UserData>();
+        List<WebElement> elements = wd.findElements(By.xpath("//img[@alt='Edit']"));
+        for (WebElement element : elements){
+            String name = element.getText();
+            UserData group = new UserData(name, null, null, null, null, null);
+            groups.add(group);
+        }
+        return groups;
     }
 }
