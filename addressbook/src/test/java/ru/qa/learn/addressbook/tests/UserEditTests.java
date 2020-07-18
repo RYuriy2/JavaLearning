@@ -4,6 +4,8 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.qa.learn.addressbook.model.UserData;
 
+import java.util.List;
+
 public class UserEditTests extends TestBase {
 
   @Test
@@ -14,14 +16,14 @@ public class UserEditTests extends TestBase {
               "Михайлович", "Буслаев", "+79009009090",
               "test@test.com","testGroupnull"),true);
     }
-    int before = app.getUserHelper().getUserCount();
+    List<UserData> before = app.getUserHelper().getUserList();
     app.getUserHelper().initEditUser();
     app.getUserHelper().fillUserData(new UserData("МихаилNew",
             "МихайловичNew", "БуслаевNew", "+79009009099",
             "testNew@test.com", null),false);
     app.getUserHelper().submitEditUser();
     app.getUserHelper().returnToHomePage();
-    int after = app.getUserHelper().getUserCount();
-    Assert.assertEquals(after, before);
+    List<UserData> after = app.getUserHelper().getUserList();
+    Assert.assertEquals(after.size(),before.size() + 1);
   }
 }
