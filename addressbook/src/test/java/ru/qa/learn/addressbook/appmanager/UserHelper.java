@@ -1,7 +1,6 @@
 package ru.qa.learn.addressbook.appmanager;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
@@ -35,7 +34,7 @@ public class UserHelper extends HelperBase {
 
     public void fillUserData(UserData userData, boolean creation) {
         type(By.name("firstname"),userData.getFirstname());
-        type(By.name("middlename"),userData.getMidlname());
+        type(By.name("middlename"),userData.getAddress());
         type(By.name("lastname"),userData.getLastname());
         type(By.name("mobile"),userData.getPhoneNumber());
         type(By.name("email"),userData.getEmail());
@@ -73,12 +72,27 @@ public class UserHelper extends HelperBase {
 
     public List<UserData> getUserList() {
         List<UserData> groups = new ArrayList<UserData>();
-        List<WebElement> elements = wd.findElements(By.xpath("//img[@alt='Edit']"));
-        for (WebElement element : elements){
-            String name = element.getText();
-            UserData group = new UserData(name, null, null, null, null, null);
+        List<WebElement> elements = wd.findElements(By.xpath("//table[@id='maintable']/tbody/tr/td"));
+//        for (WebElement element : line){
+//            List<WebElement> elements = element.findElements(By.xpath("//table[@id='maintable']/tbody/tr/td"));
+//            for (WebElement element1 : elements){
+//                String firstname = element1.getText();
+//                UserData group = new UserData(firstname, null, null,
+//                        null, null, null);
+//                groups.add(group);
+//            }
+//        }
+        for (int i=1; i<elements.size()-1;i+=10){
+            String firstname = elements.get(i).getText();
+            String lastname = elements.get(i+1).getText();
+            String address = elements.get(i+2).getText();
+            String email = elements.get(i+3).getText();
+            String phoneNumber = elements.get(i+4).getText();
+            UserData group = new UserData(firstname, address, lastname,
+                    phoneNumber, email, null);
             groups.add(group);
         }
+
         return groups;
     }
 }

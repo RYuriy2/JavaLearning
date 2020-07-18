@@ -22,7 +22,7 @@ public class UserDelitionTests extends TestBase {
     app.closeAlertPopUp();
     app.getNavigationHelper().gotoHomePage();
     List<UserData> after = app.getUserHelper().getUserList();
-    Assert.assertEquals(after.size(),before.size() + 1);
+    Assert.assertEquals(after.size(),before.size() - 1);
   }
 
 }

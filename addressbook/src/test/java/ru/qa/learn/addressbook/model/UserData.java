@@ -2,15 +2,15 @@ package ru.qa.learn.addressbook.model;
 
 public class UserData {
     private final String firstname;
-    private final String midlname;
+    private final String address;
     private final String lastname;
     private final String phoneNumber;
     private final String email;
     private final String group;
 
-    public UserData(String firstname, String midlname, String lastname, String phoneNumber, String email, String group) {
+    public UserData(String firstname, String address, String lastname, String phoneNumber, String email, String group) {
         this.firstname = firstname;
-        this.midlname = midlname;
+        this.address = address;
         this.lastname = lastname;
         this.phoneNumber = phoneNumber;
         this.email = email;
@@ -21,8 +21,8 @@ public class UserData {
         return firstname;
     }
 
-    public String getMidlname() {
-        return midlname;
+    public String getAddress() {
+        return address;
     }
 
     public String getLastname() {

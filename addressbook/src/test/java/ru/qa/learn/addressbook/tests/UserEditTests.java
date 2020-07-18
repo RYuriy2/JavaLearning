@@ -24,6 +24,6 @@ public class UserEditTests extends TestBase {
     app.getUserHelper().submitEditUser();
     app.getUserHelper().returnToHomePage();
     List<UserData> after = app.getUserHelper().getUserList();
-    Assert.assertEquals(after.size(),before.size() + 1);
+    Assert.assertEquals(after.size(),before.size());
   }
 }
