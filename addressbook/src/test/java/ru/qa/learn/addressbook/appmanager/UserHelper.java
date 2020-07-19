@@ -20,8 +20,8 @@ public class UserHelper extends HelperBase {
         super(wd);
     }
 
-    public void selectUser() {
-        click(By.name("selected[]"));
+    public void selectUser(int index) {
+        wd.findElements(By.name("selected[]")).get(index).click();
     }
 
     public void returnToHomePage() {
@@ -34,7 +34,7 @@ public class UserHelper extends HelperBase {
 
     public void fillUserData(UserData userData, boolean creation) {
         type(By.name("firstname"),userData.getFirstname());
-        type(By.name("middlename"),userData.getAddress());
+        type(By.name("address"),userData.getAddress());
         type(By.name("lastname"),userData.getLastname());
         type(By.name("mobile"),userData.getPhoneNumber());
         type(By.name("email"),userData.getEmail());
@@ -51,8 +51,8 @@ public class UserHelper extends HelperBase {
         click(By.xpath("//input[@value='Delete']"));
     }
 
-    public void initEditUser(){
-        click(By.xpath("//img[@alt='Edit']"));
+    public void initEditUser(int index){
+        wd.findElements(By.xpath("//img[@alt='Edit']")).get(index).click();
     }
 
     public void submitEditUser(){
@@ -82,13 +82,14 @@ public class UserHelper extends HelperBase {
 //                groups.add(group);
 //            }
 //        }
-        for (int i=1; i<elements.size()-1;i+=10){
-            String firstname = elements.get(i).getText();
+        for (int i=0; i<elements.size()-1;i+=10){
+            String firstname = elements.get(i+2).getText();
             String lastname = elements.get(i+1).getText();
-            String address = elements.get(i+2).getText();
-            String email = elements.get(i+3).getText();
-            String phoneNumber = elements.get(i+4).getText();
-            UserData group = new UserData(firstname, address, lastname,
+            String address = elements.get(i+3).getText();
+            String email = elements.get(i+4).getText();
+            String phoneNumber = elements.get(i+5).getText();
+            String id = elements.get(i).findElement(By.name("selected[]")).getAttribute("id");
+            UserData group = new UserData(id, firstname, address, lastname,
                     phoneNumber, email, null);
             groups.add(group);
         }
