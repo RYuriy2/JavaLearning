@@ -4,6 +4,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.qa.learn.addressbook.model.UserData;
 
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 
@@ -29,6 +30,9 @@ public class UserEditTests extends TestBase {
         Assert.assertEquals(after.size(), before.size());
         before.remove(before.size() - 1);
         before.add(user);
-        Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));
+        Comparator<? super UserData> byID = ((o1, o2) -> Integer.compare(o1.getID(),o2.getID()));
+        before.sort(byID);
+        after.sort(byID);
+        Assert.assertEquals(before,after);
     }
 }

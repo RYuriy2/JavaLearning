@@ -4,8 +4,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.qa.learn.addressbook.model.GroupData;
 
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 public class GroupEditTests extends TestBase {
 
@@ -28,7 +27,10 @@ public class GroupEditTests extends TestBase {
 
     before.remove(before.size() - 1);
     before.add(group);
-    Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));
+    Comparator<? super GroupData> byId = ((o1, o2) -> Integer.compare(o1.getID(),o2.getID()));
+    before.sort(byId);
+    after.sort(byId);
+    Assert.assertEquals(before,after);
   }
 
 }
