@@ -1,7 +1,7 @@
 package ru.qa.learn.addressbook.model;
 
 public class UserData {
-    private final String id;
+    private int id;
     private final String firstname;
     private final String address;
     private final String lastname;
@@ -9,7 +9,7 @@ public class UserData {
     private final String email;
     private final String group;
 
-    public UserData(String id, String firstname, String address, String lastname, String phoneNumber, String email, String group) {
+    public UserData(int id, String firstname, String address, String lastname, String phoneNumber, String email, String group) {
         this.id = id;
         this.firstname = firstname;
         this.address = address;
@@ -19,7 +19,7 @@ public class UserData {
         this.group = group;
     }
     public UserData(String firstname, String address, String lastname, String phoneNumber, String email, String group) {
-        this.id = null;
+        this.id = 0;
         this.firstname = firstname;
         this.address = address;
         this.lastname = lastname;
@@ -28,8 +28,12 @@ public class UserData {
         this.group = group;
     }
 
-    public String getID() {
+    public int getID() {
         return id;
+    }
+
+    public void setID(int id) {
+        this.id = id;
     }
 
     public String getFirstname() {
@@ -55,25 +59,13 @@ public class UserData {
     public String getGroup() { return group; }
 
     @Override
-    public String toString() {
-        return "UserData{" +
-                "id='" + id + '\'' +
-                ", firstname='" + firstname + '\'' +
-                ", address='" + address + '\'' +
-                ", lastname='" + lastname + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", email='" + email + '\'' +
-                '}';
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
         UserData userData = (UserData) o;
 
-        if (id != null ? !id.equals(userData.id) : userData.id != null) return false;
+        if (id != userData.id) return false;
         if (firstname != null ? !firstname.equals(userData.firstname) : userData.firstname != null) return false;
         if (address != null ? !address.equals(userData.address) : userData.address != null) return false;
         if (lastname != null ? !lastname.equals(userData.lastname) : userData.lastname != null) return false;
@@ -84,7 +76,7 @@ public class UserData {
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
+        int result = id;
         result = 31 * result + (firstname != null ? firstname.hashCode() : 0);
         result = 31 * result + (address != null ? address.hashCode() : 0);
         result = 31 * result + (lastname != null ? lastname.hashCode() : 0);
@@ -92,4 +84,17 @@ public class UserData {
         result = 31 * result + (email != null ? email.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "UserData{" +
+                "id=" + id +
+                ", firstname='" + firstname + '\'' +
+                ", address='" + address + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
+
 }
