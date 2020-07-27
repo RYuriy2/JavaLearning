@@ -13,7 +13,7 @@ public class GroupDelitionTests extends TestBase {
     public void ensurePrecinditions() {
         app.goTo().groupPage();
         if (app.group().list().size() == 0) {
-            app.group().create(new GroupData("testnew", null, null));
+            app.group().create(new GroupData().withName("testnew"));
         }
     }
 

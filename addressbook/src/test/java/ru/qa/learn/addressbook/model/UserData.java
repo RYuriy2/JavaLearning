@@ -1,62 +1,94 @@
 package ru.qa.learn.addressbook.model;
 
 public class UserData {
-    private int id;
-    private final String firstname;
-    private final String address;
-    private final String lastname;
-    private final String phoneNumber;
-    private final String email;
-    private final String group;
+    private int id = Integer.MAX_VALUE;
+    private String firstname;
+    private String address;
+    private String lastname;
+    private String phoneNumber;
+    private String email;
+    private String group;
 
-    public UserData(int id, String firstname, String address, String lastname, String phoneNumber, String email, String group) {
-        this.id = id;
-        this.firstname = firstname;
-        this.address = address;
-        this.lastname = lastname;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-        this.group = group;
-    }
-    public UserData(String firstname, String address, String lastname, String phoneNumber, String email, String group) {
-        this.id = Integer.MAX_VALUE;
-        this.firstname = firstname;
-        this.address = address;
-        this.lastname = lastname;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-        this.group = group;
-    }
+
+//    public UserData(int id, String firstname, String address, String lastname, String phoneNumber, String email, String group) {
+//        this.id = id;
+//        this.firstname = firstname;
+//        this.address = address;
+//        this.lastname = lastname;
+//        this.phoneNumber = phoneNumber;
+//        this.email = email;
+//        this.group = group;
+//    }
+//    public UserData(String firstname, String address, String lastname, String phoneNumber, String email, String group) {
+//        this.id = Integer.MAX_VALUE;
+//        this.firstname = firstname;
+//        this.address = address;
+//        this.lastname = lastname;
+//        this.phoneNumber = phoneNumber;
+//        this.email = email;
+//        this.group = group;
+//    }
 
     public int getID() {
         return id;
     }
 
-    public void setID(int id) {
+    public UserData withID(int id) {
         this.id = id;
+        return this;
     }
 
     public String getFirstname() {
         return firstname;
     }
 
+    public UserData withFirstname(String firstname) {
+        this.firstname = firstname;
+        return this;
+    }
+
     public String getAddress() {
         return address;
+    }
+
+    public UserData withAddress(String address) {
+        this.address = address;
+        return this;
     }
 
     public String getLastname() {
         return lastname;
     }
 
+    public UserData withLastname(String lastname) {
+        this.lastname = lastname;
+        return this;
+    }
+
     public String getPhoneNumber() {
         return phoneNumber;
+    }
+
+    public UserData withPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+        return this;
     }
 
     public String getEmail() {
         return email;
     }
 
+    public UserData withEmail(String email) {
+        this.email = email;
+        return this;
+    }
+
     public String getGroup() { return group; }
+
+    public UserData withGroup(String group) {
+        this.group = group;
+        return this;
+    }
 
     @Override
     public String toString() {

@@ -14,18 +14,17 @@ public class UserEditTests extends TestBase {
     public void ensurePrecondition() {
         app.goTo().homePage();
         if (app.user().list().size() == 0) {
-            app.user().create(new UserData("Мефодий",
-                    "Михайлович", "Буслаев", "+79009009090",
-                    "test@test.com", "testGroupnull"), true);
+            app.user().create(new UserData().withLastname("Михаил").withAddress("Михайлович").withFirstname("Буслаев")
+                    .withPhoneNumber("+79009009090").withEmail("test@test.com").withGroup("testGroupnull"), true);
         }
     }
 
     @Test(enabled = true)
     public void testEditUser() {
         List<UserData> before = app.user().list();
-        UserData user = new UserData(before.get(before.size() - 1).getID(), "МихаилNew",
-                "МихайловичNew", "БуслаевNew", "+79009009099",
-                "testNew@test.com", null);
+        UserData user = new UserData().withID(before.get(before.size() - 1).getID()).withLastname("МихаилNew")
+                .withAddress("МихайловичNew").withFirstname("БуслаевNew").withPhoneNumber("+79009009099")
+                .withEmail("testNew@test.com");
         int index = before.size() - 1;
 
         app.user().edit(user, index);

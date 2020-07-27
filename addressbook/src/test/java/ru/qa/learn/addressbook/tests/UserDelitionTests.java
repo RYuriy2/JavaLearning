@@ -13,9 +13,8 @@ public class UserDelitionTests extends TestBase {
     public void ensurePrecondition() {
         app.goTo().homePage();
         if (app.user().list().size() == 0) {
-            app.user().create(new UserData("Мефодий",
-                    "Михайлович", "Буслаев", "+79009009090",
-                    "test@test.com", "testGroupnull"), true);
+            app.user().create(new UserData().withLastname("Михаил").withAddress("Михайлович").withFirstname("Буслаев")
+                    .withPhoneNumber("+79009009090").withEmail("test@test.com").withGroup("testGroupnull"), true);
         }
     }
 

@@ -99,9 +99,8 @@ public class UserHelper extends HelperBase {
                 String phoneNumber = elements.get(5).getText();
                 String address = elements.get(3).getText();
                 int id = Integer.parseInt(elements.get(0).findElement(By.name("selected[]")).getAttribute("id"));
-                UserData user = new UserData(id, firstname, address, lastname,
-                        phoneNumber, email, null);
-                users.add(user);
+                users.add(new UserData().withID(id).withFirstname(firstname).withAddress(address).withLastname(lastname)
+                        .withPhoneNumber(phoneNumber).withEmail(email));
             }
         }
         return users;

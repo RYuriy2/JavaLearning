@@ -13,15 +13,15 @@ public class GroupEditTests extends TestBase {
     public void ensurePrecinditions() {
         app.goTo().groupPage();
         if (app.group().list().size() == 0) {
-            app.group().create(new GroupData("testnew", null, null));
+            app.group().create(new GroupData().withName("testnew"));
         }
     }
 
     @Test
     public void testEditGroup() throws Exception {
         List<GroupData> before = app.group().list();
-        GroupData group = new GroupData(before.get(before.size() - 1).getID(), "testGroupEdit1last",
-                "testHeader1Edit1last", "testFooter1Edit1last");
+        GroupData group = new GroupData().withID(before.get(before.size() - 1).getID()).withName("testGroupEdit1last")
+                .withHeader("testHeader1Edit1last").withFooter("testFooter1Edit1last");
         int index = before.size() - 1;
 
         app.group().edit(group, index);
