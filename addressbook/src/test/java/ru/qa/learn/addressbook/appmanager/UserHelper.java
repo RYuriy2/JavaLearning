@@ -6,9 +6,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.qa.learn.addressbook.model.UserData;
-
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class UserHelper extends HelperBase {
 
@@ -44,17 +44,17 @@ public class UserHelper extends HelperBase {
     }
 
 
-    public void selectUser(int index) {
-        wd.findElements(By.name("selected[]")).get(index).click();
+    private void selectUserByID(int id) {
+        wd.findElement(By.cssSelector("input[id='" + id + "']")).click();
     }
 
 
-    public void initEditUser(int index) {
-        wd.findElements(By.xpath("//img[@alt='Edit']")).get(index).click();
+    public void initEditUserByID(int id) {
+        wd.findElement(By.cssSelector("a[href='edit.php?id=" + id + "']")).click();
     }
 
-    public void edit(UserData user, int index) {
-        initEditUser(index);
+    public void edit(UserData user) {
+        initEditUserByID(user.getID());
         fillUserData(user, false);
         submitEditUser();
         returnToHomePage();
@@ -65,8 +65,8 @@ public class UserHelper extends HelperBase {
     }
 
 
-    public void delete(int index) {
-        selectUser(index);
+    public void delete(UserData user) {
+        selectUserByID(user.getID());
         deleteSelectedUser();
         closeAlertPopUp();
         returnToHomePage();
@@ -87,8 +87,8 @@ public class UserHelper extends HelperBase {
     }
 
 
-    public List<UserData> list() {
-        List<UserData> users = new ArrayList<UserData>();
+    public Set<UserData> all() {
+        Set<UserData> users = new HashSet<UserData>();
         List<WebElement> line = wd.findElements(By.xpath("//table[@id='maintable']/tbody/tr"));
         for (WebElement element : line) {
             List<WebElement> elements = element.findElements(By.tagName("td"));
@@ -115,4 +115,5 @@ public class UserHelper extends HelperBase {
     public void closeAlertPopUp() {
         wd.switchTo().alert().accept();
     }
+
 }

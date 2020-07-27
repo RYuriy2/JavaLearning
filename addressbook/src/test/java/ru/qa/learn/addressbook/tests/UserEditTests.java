@@ -4,16 +4,14 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.qa.learn.addressbook.model.UserData;
-
-import java.util.Comparator;
-import java.util.List;
+import java.util.Set;
 
 public class UserEditTests extends TestBase {
 
     @BeforeMethod
     public void ensurePrecondition() {
         app.goTo().homePage();
-        if (app.user().list().size() == 0) {
+        if (app.user().all().size() == 0) {
             app.user().create(new UserData().withLastname("Михаил").withAddress("Михайлович").withFirstname("Буслаев")
                     .withPhoneNumber("+79009009090").withEmail("test@test.com").withGroup("testGroupnull"), true);
         }
@@ -21,21 +19,18 @@ public class UserEditTests extends TestBase {
 
     @Test(enabled = true)
     public void testEditUser() {
-        List<UserData> before = app.user().list();
-        UserData user = new UserData().withID(before.get(before.size() - 1).getID()).withLastname("МихаилNew")
+        Set<UserData> before = app.user().all();
+        UserData editUser = before.iterator().next();
+        UserData user = new UserData().withID(editUser.getID()).withLastname("МихаилNew")
                 .withAddress("МихайловичNew").withFirstname("БуслаевNew").withPhoneNumber("+79009009099")
                 .withEmail("testNew@test.com");
-        int index = before.size() - 1;
 
-        app.user().edit(user, index);
+        app.user().edit(user);
 
-        List<UserData> after = app.user().list();
+        Set<UserData> after = app.user().all();
         Assert.assertEquals(after.size(), before.size());
-        before.remove(index);
+        before.remove(editUser);
         before.add(user);
-        Comparator<? super UserData> byID = ((o1, o2) -> Integer.compare(o1.getID(), o2.getID()));
-        before.sort(byID);
-        after.sort(byID);
         Assert.assertEquals(before, after);
     }
 
