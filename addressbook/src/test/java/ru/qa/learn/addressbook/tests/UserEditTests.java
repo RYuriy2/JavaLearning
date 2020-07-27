@@ -1,10 +1,13 @@
 package ru.qa.learn.addressbook.tests;
 
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.qa.learn.addressbook.model.UserData;
-import java.util.Set;
+import ru.qa.learn.addressbook.model.Users;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.testng.Assert.assertEquals;
 
 public class UserEditTests extends TestBase {
 
@@ -19,7 +22,7 @@ public class UserEditTests extends TestBase {
 
     @Test(enabled = true)
     public void testEditUser() {
-        Set<UserData> before = app.user().all();
+        Users before = app.user().all();
         UserData editUser = before.iterator().next();
         UserData user = new UserData().withID(editUser.getID()).withLastname("МихаилNew")
                 .withAddress("МихайловичNew").withFirstname("БуслаевNew").withPhoneNumber("+79009009099")
@@ -27,11 +30,9 @@ public class UserEditTests extends TestBase {
 
         app.user().edit(user);
 
-        Set<UserData> after = app.user().all();
-        Assert.assertEquals(after.size(), before.size());
-        before.remove(editUser);
-        before.add(user);
-        Assert.assertEquals(before, after);
+        Users after = app.user().all();
+        assertEquals(after.size(), before.size());
+        assertThat(after, equalTo(before.without(editUser).withAdded(user)));
     }
 
 }

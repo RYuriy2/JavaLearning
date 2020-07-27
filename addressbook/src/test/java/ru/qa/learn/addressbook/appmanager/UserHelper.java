@@ -6,6 +6,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.qa.learn.addressbook.model.UserData;
+import ru.qa.learn.addressbook.model.Users;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -87,8 +89,8 @@ public class UserHelper extends HelperBase {
     }
 
 
-    public Set<UserData> all() {
-        Set<UserData> users = new HashSet<UserData>();
+    public Users all() {
+        Users users = new Users();
         List<WebElement> line = wd.findElements(By.xpath("//table[@id='maintable']/tbody/tr"));
         for (WebElement element : line) {
             List<WebElement> elements = element.findElements(By.tagName("td"));

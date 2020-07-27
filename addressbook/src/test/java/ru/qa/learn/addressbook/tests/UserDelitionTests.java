@@ -1,10 +1,13 @@
 package ru.qa.learn.addressbook.tests;
 
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.qa.learn.addressbook.model.UserData;
-import java.util.Set;
+import ru.qa.learn.addressbook.model.Users;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.testng.Assert.assertEquals;
 
 public class UserDelitionTests extends TestBase {
 
@@ -19,15 +22,15 @@ public class UserDelitionTests extends TestBase {
 
     @Test(enabled = true)
     public void testDelitionUser() {
-        Set<UserData> before = app.user().all();
-        UserData deleterUser = before.iterator().next();
+        Users before = app.user().all();
+        UserData deletedUser = before.iterator().next();
 
-        app.user().delete(deleterUser);
+        app.user().delete(deletedUser);
 
-        Set<UserData> after = app.user().all();
-        Assert.assertEquals(after.size(), before.size() - 1);
-        before.remove(deleterUser);
-        Assert.assertEquals(before, after);
+        Users after = app.user().all();
+        assertEquals(after.size(), before.size() - 1);
+        before.remove(deletedUser);
+        assertThat(after, equalTo(before.without(deletedUser)));
     }
 
 }

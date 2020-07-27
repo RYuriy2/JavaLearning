@@ -1,9 +1,12 @@
 package ru.qa.learn.addressbook.tests;
 
-import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.qa.learn.addressbook.model.UserData;
-import java.util.Set;
+import ru.qa.learn.addressbook.model.Users;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.testng.Assert.assertEquals;
 
 public class UserCreationTests extends TestBase {
 
@@ -11,17 +14,16 @@ public class UserCreationTests extends TestBase {
     public void testCreationUser() {
         app.goTo().homePage();
 
-        Set<UserData> before = app.user().all();
+        Users before = app.user().all();
         UserData user = new UserData().withLastname("Михаил").withAddress("Михайлович").withFirstname("Буслаев")
         .withPhoneNumber("+79009009090").withEmail("test@test.com").withGroup("testGroupnull");
 
         app.user().create(user, true);
 
-        Set<UserData> after = app.user().all();
-        Assert.assertEquals(after.size(), before.size() + 1);
-        user.withID((after.stream().mapToInt((u) -> u.getID()).max().getAsInt()));
-        before.add(user);
-        Assert.assertEquals(before, after);
+        Users after = app.user().all();
+        assertEquals(after.size(), before.size() + 1);
+        assertThat(after, equalTo
+                (before.withAdded(user.withID((after.stream().mapToInt((u) -> u.getID()).max().getAsInt())))));
 
     }
 }

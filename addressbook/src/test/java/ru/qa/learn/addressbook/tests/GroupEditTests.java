@@ -1,11 +1,13 @@
 package ru.qa.learn.addressbook.tests;
 
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.qa.learn.addressbook.model.GroupData;
+import ru.qa.learn.addressbook.model.Groups;
 
-import java.util.*;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.testng.Assert.assertEquals;
 
 public class GroupEditTests extends TestBase {
 
@@ -19,18 +21,16 @@ public class GroupEditTests extends TestBase {
 
     @Test
     public void testEditGroup() throws Exception {
-        Set<GroupData> before = app.group().all();
+        Groups before = app.group().all();
         GroupData editGroup = before.iterator().next();
         GroupData group = new GroupData().withID(editGroup.getID()).withName("testGroupEdit1last")
                 .withHeader("testHeader1Edit1last").withFooter("testFooter1Edit1last");
 
         app.group().edit(group);
 
-        Set<GroupData> after = app.group().all();
-        Assert.assertEquals(after.size(), before.size());
-        before.remove(editGroup);
-        before.add(group);
-        Assert.assertEquals(before, after);
+        Groups after = app.group().all();
+        assertEquals(after.size(), before.size());
+        assertThat(after, equalTo(before.withOut(editGroup).withAdded(group)));
     }
 
 }
