@@ -10,25 +10,25 @@ import java.util.List;
 public class UserDelitionTests extends TestBase {
 
     @BeforeMethod
-    public void ensurePrecondition(){
-        app.getNavigationHelper().gotoHomePage();
-        if (!app.getUserHelper().isThereUser()) {
-            app.getUserHelper().createUser(new UserData("Мефодий",
+    public void ensurePrecondition() {
+        app.goTo().homePage();
+        if (app.user().list().size() == 0) {
+            app.user().create(new UserData("Мефодий",
                     "Михайлович", "Буслаев", "+79009009090",
                     "test@test.com", "testGroupnull"), true);
         }
     }
 
-    @Test (enabled = false)
+    @Test(enabled = true)
     public void testDelitionUser() {
-        List<UserData> before = app.getUserHelper().getUserList();
-        app.getUserHelper().selectUser(before.size() - 1);
-        app.getUserHelper().deleteSelectedUser();
-        app.closeAlertPopUp();
-        app.getNavigationHelper().gotoHomePage();
-        List<UserData> after = app.getUserHelper().getUserList();
+        List<UserData> before = app.user().list();
+        int index = before.size() - 1;
+
+        app.user().delete(index);
+
+        List<UserData> after = app.user().list();
         Assert.assertEquals(after.size(), before.size() - 1);
-        before.remove(before.size() - 1);
+        before.remove(index);
         Assert.assertEquals(before, after);
     }
 
