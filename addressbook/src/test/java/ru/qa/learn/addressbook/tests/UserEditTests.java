@@ -1,6 +1,7 @@
 package ru.qa.learn.addressbook.tests;
 
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.qa.learn.addressbook.model.UserData;
 
@@ -10,29 +11,33 @@ import java.util.List;
 
 public class UserEditTests extends TestBase {
 
-    @Test
-    public void testEditUser() {
+    @BeforeMethod
+    public void ensurePrecondition(){
         app.getNavigationHelper().gotoHomePage();
         if (!app.getUserHelper().isThereUser()) {
             app.getUserHelper().createUser(new UserData("Мефодий",
                     "Михайлович", "Буслаев", "+79009009090",
                     "test@test.com", "testGroupnull"), true);
         }
+    }
+
+    @Test (enabled = false)
+    public void testEditUser() {
+
         List<UserData> before = app.getUserHelper().getUserList();
-        app.getUserHelper().initEditUser(before.size() - 1);
         UserData user = new UserData(before.get(before.size() - 1).getID(), "МихаилNew",
                 "МихайловичNew", "БуслаевNew", "+79009009099",
                 "testNew@test.com", null);
-        app.getUserHelper().fillUserData(user, false);
-        app.getUserHelper().submitEditUser();
-        app.getUserHelper().returnToHomePage();
+        int index = before.size() - 1;
+        app.getUserHelper().editUser(user, index);
         List<UserData> after = app.getUserHelper().getUserList();
         Assert.assertEquals(after.size(), before.size());
-        before.remove(before.size() - 1);
+        before.remove(index);
         before.add(user);
         Comparator<? super UserData> byID = ((o1, o2) -> Integer.compare(o1.getID(),o2.getID()));
         before.sort(byID);
         after.sort(byID);
         Assert.assertEquals(before,after);
     }
+
 }

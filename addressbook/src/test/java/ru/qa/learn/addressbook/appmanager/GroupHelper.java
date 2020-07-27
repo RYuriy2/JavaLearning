@@ -14,38 +14,9 @@ public class GroupHelper extends HelperBase {
         super(wd);
     }
 
-    public void returnToGroupPage() {
-        click(By.linkText("group page"));
-    }
-
-    public void submitGroupCreation() {
-        click(By.name("submit"));
-    }
-
-    public void fillGroupForm(GroupData groupData) {
-        type(By.name("group_name"), groupData.getName());
-        type(By.name("group_header"), groupData.getHeader());
-        type(By.name("group_footer"), groupData.getFooter());
-    }
-
-    public void initEditGroup() {
-        click(By.name("edit"));
-    }
-
-    public void submitEditGroup() {
-        click(By.name("update"));
-    }
 
     public void initGroupCreation() {
         click(By.name("new"));
-    }
-
-    public void deleteSelectedGroups() {
-        click(By.xpath("(//input[@name='delete'])"));
-    }
-
-    public void selectGroup(int index) {
-        wd.findElements(By.name("selected[]")).get(index).click();
     }
 
     public void createGroup(GroupData group) {
@@ -55,13 +26,59 @@ public class GroupHelper extends HelperBase {
         returnToGroupPage();
     }
 
+    public void submitGroupCreation() {
+        click(By.name("submit"));
+    }
+
+
+    public void fillGroupForm(GroupData groupData) {
+        type(By.name("group_name"), groupData.getName());
+        type(By.name("group_header"), groupData.getHeader());
+        type(By.name("group_footer"), groupData.getFooter());
+    }
+
+
+    public void selectGroup(int index) {
+        wd.findElements(By.name("selected[]")).get(index).click();
+    }
+
+
+    public void initEditGroup() {
+        click(By.name("edit"));
+    }
+
+    public void editGroup(GroupData group, int index) {
+        selectGroup(index);
+        initEditGroup();
+        fillGroupForm(group);
+        submitEditGroup();
+        returnToGroupPage();
+    }
+
+    public void submitEditGroup() {
+        click(By.name("update"));
+    }
+
+
+    public void deleteSelectedGroups() {
+        click(By.xpath("(//input[@name='delete'])"));
+    }
+
+
+    public void returnToGroupPage() {
+        click(By.linkText("group page"));
+    }
+
+
     public boolean isThereGroup() {
         return isElementPresent(By.name("selected[]"));
     }
 
+
     public int getGroupCount() {
         return wd.findElements(By.name("selected[]")).size();
     }
+
 
     public List<GroupData> getGroupList() {
         List<GroupData> groups = new ArrayList<GroupData>();

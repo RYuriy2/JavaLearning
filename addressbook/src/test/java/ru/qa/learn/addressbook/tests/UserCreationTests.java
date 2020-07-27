@@ -11,7 +11,7 @@ import java.util.List;
 
 public class UserCreationTests extends TestBase {
 
-    @Test
+    @Test (enabled = false)
     public void testCreationUser() {
         app.getNavigationHelper().gotoHomePage();
         List<UserData> before = app.getUserHelper().getUserList();

@@ -1,6 +1,7 @@
 package ru.qa.learn.addressbook.tests;
 
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.qa.learn.addressbook.model.UserData;
 
@@ -8,14 +9,18 @@ import java.util.List;
 
 public class UserDelitionTests extends TestBase {
 
-    @Test
-    public void testDelitionUser() {
+    @BeforeMethod
+    public void ensurePrecondition(){
         app.getNavigationHelper().gotoHomePage();
         if (!app.getUserHelper().isThereUser()) {
-            app.getUserHelper().createUser(new UserData("Мефодий", "Михайлович",
-                    "Буслаев", "+79009009090", "test@test.com",
-                    "testGroupnull"), true);
+            app.getUserHelper().createUser(new UserData("Мефодий",
+                    "Михайлович", "Буслаев", "+79009009090",
+                    "test@test.com", "testGroupnull"), true);
         }
+    }
+
+    @Test (enabled = false)
+    public void testDelitionUser() {
         List<UserData> before = app.getUserHelper().getUserList();
         app.getUserHelper().selectUser(before.size() - 1);
         app.getUserHelper().deleteSelectedUser();

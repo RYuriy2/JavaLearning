@@ -12,25 +12,25 @@ import java.util.List;
 
 public class UserHelper extends HelperBase {
 
-    public int getUserCount() {
-        return wd.findElements(By.xpath("//img[@alt='Edit']")).size();
-    }
-
     public UserHelper(WebDriver wd) {
         super(wd);
     }
 
-    public void selectUser(int index) {
-        wd.findElements(By.name("selected[]")).get(index).click();
+    public void initCreationNewUser() {
+        click(By.linkText("add new"));
     }
 
-    public void returnToHomePage() {
-        click(By.linkText("home page"));
+    public void createUser(UserData user, boolean creation) {
+        initCreationNewUser();
+        fillUserData(user, creation);
+        submitCreateNewUser();
+        returnToHomePage();
     }
 
     public void submitCreateNewUser() {
         click(By.xpath("(//input[@name='submit'])[2]"));
     }
+
 
     public void fillUserData(UserData userData, boolean creation) {
         type(By.name("firstname"), userData.getFirstname());
@@ -43,32 +43,42 @@ public class UserHelper extends HelperBase {
         } else Assert.assertFalse(isElementPresent(By.name("new_group")));
     }
 
-    public void initCreationNewUser() {
-        click(By.linkText("add new"));
+
+    public void selectUser(int index) {
+        wd.findElements(By.name("selected[]")).get(index).click();
     }
 
-    public void deleteSelectedUser() {
-        click(By.xpath("//input[@value='Delete']"));
-    }
 
     public void initEditUser(int index) {
         wd.findElements(By.xpath("//img[@alt='Edit']")).get(index).click();
+    }
+
+    public void editUser(UserData user, int index) {
+        initEditUser(index);
+        fillUserData(user, false);
+        submitEditUser();
+        returnToHomePage();
     }
 
     public void submitEditUser() {
         click(By.xpath("//input[@name='update']"));
     }
 
-    public void createUser(UserData user, boolean creation) {
-        initCreationNewUser();
-        fillUserData(user, creation);
-        submitCreateNewUser();
-        returnToHomePage();
+
+    public void deleteSelectedUser() {
+        click(By.xpath("//input[@value='Delete']"));
     }
+
+
+    public void returnToHomePage() {
+        click(By.linkText("home page"));
+    }
+
 
     public boolean isThereUser() {
         return isElementPresent(By.xpath("//img[@alt='Edit']"));
     }
+
 
     public List<UserData> getUserList() {
         List<UserData> users = new ArrayList<UserData>();
@@ -88,5 +98,10 @@ public class UserHelper extends HelperBase {
             }
         }
         return users;
+    }
+
+
+    public int getUserCount() {
+        return wd.findElements(By.xpath("//img[@alt='Edit']")).size();
     }
 }
