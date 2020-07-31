@@ -26,6 +26,7 @@ public class UserHelper extends HelperBase {
         initCreationNewUser();
         fillUserData(user, creation);
         submitCreateNewUser();
+        userCache = null;
         returnToHomePage();
     }
 
@@ -59,6 +60,7 @@ public class UserHelper extends HelperBase {
         initEditUserByID(user.getID());
         fillUserData(user, false);
         submitEditUser();
+        userCache = null;
         returnToHomePage();
     }
 
@@ -71,6 +73,7 @@ public class UserHelper extends HelperBase {
         selectUserByID(user.getID());
         deleteSelectedUser();
         closeAlertPopUp();
+        userCache = null;
         returnToHomePage();
     }
 
@@ -89,23 +92,29 @@ public class UserHelper extends HelperBase {
     }
 
 
+    Users userCache = null;
+
     public Users all() {
-        Users users = new Users();
-        List<WebElement> line = wd.findElements(By.xpath("//table[@id='maintable']/tbody/tr"));
-        for (WebElement element : line) {
-            List<WebElement> elements = element.findElements(By.tagName("td"));
-            if (elements.size() != 0) {
-                String firstname = elements.get(2).getText();
-                String lastname = elements.get(1).getText();
-                String email = elements.get(4).getText();
-                String phoneNumber = elements.get(5).getText();
-                String address = elements.get(3).getText();
-                int id = Integer.parseInt(elements.get(0).findElement(By.name("selected[]")).getAttribute("id"));
-                users.add(new UserData().withID(id).withFirstname(firstname).withAddress(address).withLastname(lastname)
-                        .withPhoneNumber(phoneNumber).withEmail(email));
+        if (userCache != null) {
+            return new Users(userCache);
+        } else {
+            userCache = new Users();
+            List<WebElement> line = wd.findElements(By.xpath("//table[@id='maintable']/tbody/tr"));
+            for (WebElement element : line) {
+                List<WebElement> elements = element.findElements(By.tagName("td"));
+                if (elements.size() != 0) {
+                    String firstname = elements.get(2).getText();
+                    String lastname = elements.get(1).getText();
+                    String email = elements.get(4).getText();
+                    String phoneNumber = elements.get(5).getText();
+                    String address = elements.get(3).getText();
+                    int id = Integer.parseInt(elements.get(0).findElement(By.name("selected[]")).getAttribute("id"));
+                    userCache.add(new UserData().withID(id).withFirstname(firstname).withAddress(address).withLastname(lastname)
+                            .withPhoneNumber(phoneNumber).withEmail(email));
+                }
             }
+            return new Users(userCache);
         }
-        return users;
     }
 
 

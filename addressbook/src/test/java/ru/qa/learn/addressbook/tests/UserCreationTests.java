@@ -20,8 +20,8 @@ public class UserCreationTests extends TestBase {
 
         app.user().create(user, true);
 
+        assertEquals(app.user().getUserCount(), before.size() + 1);
         Users after = app.user().all();
-        assertEquals(after.size(), before.size() + 1);
         assertThat(after, equalTo
                 (before.withAdded(user.withID((after.stream().mapToInt((u) -> u.getID()).max().getAsInt())))));
 

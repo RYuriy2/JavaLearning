@@ -27,8 +27,8 @@ public class UserDelitionTests extends TestBase {
 
         app.user().delete(deletedUser);
 
+        assertEquals(app.user().getUserCount(), before.size() - 1);
         Users after = app.user().all();
-        assertEquals(after.size(), before.size() - 1);
         before.remove(deletedUser);
         assertThat(after, equalTo(before.without(deletedUser)));
     }

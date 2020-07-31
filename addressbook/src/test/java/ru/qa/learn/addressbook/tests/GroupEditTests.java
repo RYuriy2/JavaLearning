@@ -28,8 +28,8 @@ public class GroupEditTests extends TestBase {
 
         app.group().edit(group);
 
+        assertEquals(app.group().getGroupCount(), before.size());
         Groups after = app.group().all();
-        assertEquals(after.size(), before.size());
         assertThat(after, equalTo(before.withOut(editGroup).withAdded(group)));
     }
 

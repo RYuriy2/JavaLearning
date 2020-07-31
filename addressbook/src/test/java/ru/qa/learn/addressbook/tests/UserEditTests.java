@@ -30,8 +30,8 @@ public class UserEditTests extends TestBase {
 
         app.user().edit(user);
 
+        assertEquals(app.user().getUserCount(), before.size());
         Users after = app.user().all();
-        assertEquals(after.size(), before.size());
         assertThat(after, equalTo(before.without(editUser).withAdded(user)));
     }
 

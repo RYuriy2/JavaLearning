@@ -5,7 +5,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import ru.qa.learn.addressbook.model.GroupData;
 import ru.qa.learn.addressbook.model.Groups;
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -25,6 +24,7 @@ public class GroupHelper extends HelperBase {
         initGroupCreation();
         fillGroupForm(group);
         submitGroupCreation();
+        groupCache = null;
         returnToGroupPage();
     }
 
@@ -58,6 +58,7 @@ public class GroupHelper extends HelperBase {
         initEditGroup();
         fillGroupForm(group);
         submitEditGroup();
+        groupCache = null;
         returnToGroupPage();
     }
 
@@ -69,6 +70,7 @@ public class GroupHelper extends HelperBase {
     public void delete(GroupData group) {
         selectGroupByID(group.getID());
         deleteSelectedGroups();
+        groupCache = null;
         returnToGroupPage();
     }
 
@@ -91,16 +93,21 @@ public class GroupHelper extends HelperBase {
         return wd.findElements(By.name("selected[]")).size();
     }
 
+    private Groups groupCache = null;
 
     public Groups all() {
-        Groups groups = new Groups();
-        List<WebElement> elements = wd.findElements(By.cssSelector("span.group"));
-        for (WebElement element : elements) {
-            String name = element.getText();
-            int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
-            groups.add(new GroupData().withID(id).withName(name));
+        if (groupCache != null) {
+            return new Groups(groupCache);
+        } else {
+            groupCache = new Groups();
+            List<WebElement> elements = wd.findElements(By.cssSelector("span.group"));
+            for (WebElement element : elements) {
+                String name = element.getText();
+                int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
+                groupCache.add(new GroupData().withID(id).withName(name));
+            }
+            return new Groups(groupCache);
         }
-        return groups;
     }
 
 
