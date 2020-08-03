@@ -8,6 +8,7 @@ public class UserData {
     private String homePhone;
     private String mobilePhone;
     private String workPhone;
+    private String allPhones;
     private String email;
     private String group;
 
@@ -53,6 +54,15 @@ public class UserData {
 
     public UserData withHomePhoneNumber(String phoneNumber) {
         this.homePhone = phoneNumber;
+        return this;
+    }
+
+    public String getAllPhone() {
+        return allPhones;
+    }
+
+    public UserData withAllPhoneNumber(String allPhones) {
+        this.allPhones = allPhones;
         return this;
     }
 

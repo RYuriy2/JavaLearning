@@ -104,12 +104,11 @@ public class UserHelper extends HelperBase {
                     String firstname = elements.get(2).getText();
                     String lastname = elements.get(1).getText();
                     String email = elements.get(4).getText();
-                    String[] phones = elements.get(5).getText().split("\n");
+                    String allPhones = elements.get(5).getText();
                     String address = elements.get(3).getText();
                     int id = Integer.parseInt(elements.get(0).findElement(By.name("selected[]")).getAttribute("id"));
                     userCache.add(new UserData().withID(id).withFirstname(firstname).withAddress(address).withLastname(lastname)
-                            .withHomePhoneNumber(phones[0]).withMobilePhoneNumber(phones[1]).withWorkPhoneNumber(phones[2])
-                            .withEmail(email));
+                            .withAllPhoneNumber(allPhones).withEmail(email));
                 }
             }
             return new Users(userCache);

@@ -3,6 +3,9 @@ package ru.qa.learn.addressbook.tests;
 import org.testng.annotations.Test;
 import ru.qa.learn.addressbook.model.UserData;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -14,9 +17,12 @@ public class UserPhoneTests extends TestBase {
         UserData user = app.user().all().iterator().next();
         UserData userInfoFromEditForm = app.user().infoFromEditForm(user);
 
-        assertThat(user.getHomePhone(), equalTo(cleaned(userInfoFromEditForm.getHomePhone())));
-        assertThat(user.getMobilePhone(), equalTo(cleaned(userInfoFromEditForm.getMobilePhone())));
-        assertThat(user.getWorkPhone(), equalTo(cleaned(userInfoFromEditForm.getWorkPhone())));
+        assertThat(user.getAllPhone(), equalTo(mergePhones(userInfoFromEditForm)));
+    }
+
+    private String mergePhones(UserData user) {
+        return Arrays.asList(user.getHomePhone(),user.getMobilePhone(),user.getWorkPhone()).stream().filter((s)->!s.equals(""))
+                .map(this::cleaned).collect(Collectors.joining("\n"));
     }
 
     public String cleaned(String phone){
