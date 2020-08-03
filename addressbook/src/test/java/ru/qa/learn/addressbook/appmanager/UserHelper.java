@@ -8,9 +8,7 @@ import org.testng.Assert;
 import ru.qa.learn.addressbook.model.UserData;
 import ru.qa.learn.addressbook.model.Users;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class UserHelper extends HelperBase {
 
@@ -39,7 +37,7 @@ public class UserHelper extends HelperBase {
         type(By.name("firstname"), userData.getFirstname());
         type(By.name("address"), userData.getAddress());
         type(By.name("lastname"), userData.getLastname());
-        type(By.name("mobile"), userData.getPhoneNumber());
+        type(By.name("mobile"), userData.getHomePhone());
         type(By.name("email"), userData.getEmail());
         if (creation) {
             new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(userData.getGroup());
@@ -48,12 +46,12 @@ public class UserHelper extends HelperBase {
 
 
     private void selectUserByID(int id) {
-        wd.findElement(By.cssSelector("input[id='" + id + "']")).click();
+        wd.findElement(By.cssSelector(String.format("input[id='%s']",id))).click();
     }
 
 
     public void initEditUserByID(int id) {
-        wd.findElement(By.cssSelector("a[href='edit.php?id=" + id + "']")).click();
+        wd.findElement(By.cssSelector(String.format("a[href='edit.php?id=%s']",id))).click();
     }
 
     public void edit(UserData user) {
@@ -106,11 +104,12 @@ public class UserHelper extends HelperBase {
                     String firstname = elements.get(2).getText();
                     String lastname = elements.get(1).getText();
                     String email = elements.get(4).getText();
-                    String phoneNumber = elements.get(5).getText();
+                    String[] phones = elements.get(5).getText().split("\n");
                     String address = elements.get(3).getText();
                     int id = Integer.parseInt(elements.get(0).findElement(By.name("selected[]")).getAttribute("id"));
                     userCache.add(new UserData().withID(id).withFirstname(firstname).withAddress(address).withLastname(lastname)
-                            .withPhoneNumber(phoneNumber).withEmail(email));
+                            .withHomePhoneNumber(phones[0]).withMobilePhoneNumber(phones[1]).withWorkPhoneNumber(phones[2])
+                            .withEmail(email));
                 }
             }
             return new Users(userCache);
@@ -127,4 +126,15 @@ public class UserHelper extends HelperBase {
         wd.switchTo().alert().accept();
     }
 
+    public UserData infoFromEditForm(UserData user) {
+        initEditUserByID(user.getID());
+        String firstname = wd.findElement(By.name("firstname")).getAttribute("value");
+        String lastname = wd.findElement(By.name("lastname")).getAttribute("value");
+        String homephone = wd.findElement(By.name("home")).getAttribute("value");
+        String mobilephone = wd.findElement(By.name("mobile")).getAttribute("value");
+        String workphone = wd.findElement(By.name("work")).getAttribute("value");
+        wd.navigate().back();
+        return new UserData().withFirstname(firstname).withLastname(lastname)
+                .withHomePhoneNumber(homephone).withMobilePhoneNumber(mobilephone).withWorkPhoneNumber(workphone);
+    }
 }

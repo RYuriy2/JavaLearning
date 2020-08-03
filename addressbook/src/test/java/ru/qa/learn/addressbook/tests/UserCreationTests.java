@@ -16,7 +16,7 @@ public class UserCreationTests extends TestBase {
 
         Users before = app.user().all();
         UserData user = new UserData().withLastname("Михаил").withAddress("Михайлович").withFirstname("Буслаев")
-        .withPhoneNumber("+79009009090").withEmail("test@test.com").withGroup("testGroupnull");
+        .withHomePhoneNumber("+79009009090").withEmail("test@test.com").withGroup("testGroupnull");
 
         app.user().create(user, true);
 

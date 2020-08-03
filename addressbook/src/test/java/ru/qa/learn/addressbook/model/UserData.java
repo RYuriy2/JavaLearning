@@ -5,7 +5,9 @@ public class UserData {
     private String firstname;
     private String address;
     private String lastname;
-    private String phoneNumber;
+    private String homePhone;
+    private String mobilePhone;
+    private String workPhone;
     private String email;
     private String group;
 
@@ -45,12 +47,30 @@ public class UserData {
         return this;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getHomePhone() {
+        return homePhone;
     }
 
-    public UserData withPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public UserData withHomePhoneNumber(String phoneNumber) {
+        this.homePhone = phoneNumber;
+        return this;
+    }
+
+    public String getWorkPhone() {
+        return workPhone;
+    }
+
+    public UserData withWorkPhoneNumber(String workPhone) {
+        this.workPhone = workPhone;
+        return this;
+    }
+
+    public String getMobilePhone() {
+        return mobilePhone;
+    }
+
+    public UserData withMobilePhoneNumber(String mobilePhone) {
+        this.mobilePhone = mobilePhone;
         return this;
     }
 
@@ -77,7 +97,7 @@ public class UserData {
                 ", firstname='" + firstname + '\'' +
                 ", address='" + address + '\'' +
                 ", lastname='" + lastname + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
+                ", phoneNumber='" + homePhone + '\'' +
                 ", email='" + email + '\'' +
                 '}';
     }
@@ -93,7 +113,7 @@ public class UserData {
         if (firstname != null ? !firstname.equals(userData.firstname) : userData.firstname != null) return false;
         if (address != null ? !address.equals(userData.address) : userData.address != null) return false;
         if (lastname != null ? !lastname.equals(userData.lastname) : userData.lastname != null) return false;
-        if (phoneNumber != null ? !phoneNumber.equals(userData.phoneNumber) : userData.phoneNumber != null)
+        if (homePhone != null ? !homePhone.equals(userData.homePhone) : userData.homePhone != null)
             return false;
         return email != null ? email.equals(userData.email) : userData.email == null;
     }
@@ -104,7 +124,7 @@ public class UserData {
         result = 31 * result + (firstname != null ? firstname.hashCode() : 0);
         result = 31 * result + (address != null ? address.hashCode() : 0);
         result = 31 * result + (lastname != null ? lastname.hashCode() : 0);
-        result = 31 * result + (phoneNumber != null ? phoneNumber.hashCode() : 0);
+        result = 31 * result + (homePhone != null ? homePhone.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
         return result;
     }
