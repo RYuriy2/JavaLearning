@@ -1,5 +1,7 @@
 package ru.qa.learn.addressbook.model;
 
+import java.util.Objects;
+
 public class UserData {
     private int id = Integer.MAX_VALUE;
     private String firstname;
@@ -131,41 +133,36 @@ public class UserData {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserData userData = (UserData) o;
+        return id == userData.id &&
+                Objects.equals(firstname, userData.firstname) &&
+                Objects.equals(lastname, userData.lastname);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstname, lastname);
+    }
+
+    @Override
     public String toString() {
         return "UserData{" +
                 "id=" + id +
                 ", firstname='" + firstname + '\'' +
                 ", address='" + address + '\'' +
                 ", lastname='" + lastname + '\'' +
-                ", phoneNumber='" + homePhone + '\'' +
-                ", email='" + email1 + '\'' +
+                ", homePhone='" + homePhone + '\'' +
+                ", mobilePhone='" + mobilePhone + '\'' +
+                ", workPhone='" + workPhone + '\'' +
+                ", allPhones='" + allPhones + '\'' +
+                ", email1='" + email1 + '\'' +
+                ", email2='" + email2 + '\'' +
+                ", email3='" + email3 + '\'' +
+                ", allEmail='" + allEmail + '\'' +
                 '}';
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        UserData userData = (UserData) o;
-
-        if (id != userData.id) return false;
-        if (firstname != null ? !firstname.equals(userData.firstname) : userData.firstname != null) return false;
-        if (address != null ? !address.equals(userData.address) : userData.address != null) return false;
-        if (lastname != null ? !lastname.equals(userData.lastname) : userData.lastname != null) return false;
-        if (homePhone != null ? !homePhone.equals(userData.homePhone) : userData.homePhone != null)
-            return false;
-        return email1 != null ? email1.equals(userData.email1) : userData.email1 == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + (firstname != null ? firstname.hashCode() : 0);
-        result = 31 * result + (address != null ? address.hashCode() : 0);
-        result = 31 * result + (lastname != null ? lastname.hashCode() : 0);
-        result = 31 * result + (homePhone != null ? homePhone.hashCode() : 0);
-        result = 31 * result + (email1 != null ? email1.hashCode() : 0);
-        return result;
-    }
 }

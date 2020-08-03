@@ -37,8 +37,12 @@ public class UserHelper extends HelperBase {
         type(By.name("firstname"), userData.getFirstname());
         type(By.name("address"), userData.getAddress());
         type(By.name("lastname"), userData.getLastname());
-        type(By.name("mobile"), userData.getHomePhone());
+        type(By.name("home"),userData.getHomePhone());
+        type(By.name("mobile"), userData.getMobilePhone());
+        type(By.name("work"),userData.getWorkPhone());
         type(By.name("email"), userData.getEmail1());
+        type(By.name("email2"), userData.getEmail2());
+        type(By.name("email3"), userData.getEmail3());
         if (creation) {
             new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(userData.getGroup());
         } else Assert.assertFalse(isElementPresent(By.name("new_group")));

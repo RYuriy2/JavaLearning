@@ -15,12 +15,12 @@ public class UserCreationTests extends TestBase {
         app.goTo().homePage();
 
         Users before = app.user().all();
-        UserData user = new UserData().withLastname("Михаил").withAddress("Михайлович").withFirstname("Буслаев")
-        .withHomePhoneNumber("+79009009090").withEmail1("test@test.com").withGroup("testGroupnull");
+        UserData user = new UserData().withLastname("Михаил1").withAddress("Михайлович1").withFirstname("Буслаев1")
+        .withMobilePhoneNumber("+79009009090").withEmail1("test@test.com").withGroup("testGroupnull");
 
         app.user().create(user, true);
 
-        assertEquals(app.user().getUserCount(), before.size() + 1);
+//        assertEquals(app.user().getUserCount(), before.size() + 1);
         Users after = app.user().all();
         assertThat(after, equalTo
                 (before.withAdded(user.withID((after.stream().mapToInt((u) -> u.getID()).max().getAsInt())))));
