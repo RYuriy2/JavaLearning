@@ -9,7 +9,10 @@ public class UserData {
     private String mobilePhone;
     private String workPhone;
     private String allPhones;
-    private String email;
+    private String email1;
+    private String email2;
+    private String email3;
+    private String allEmail;
     private String group;
 
     public int getID() {
@@ -84,12 +87,39 @@ public class UserData {
         return this;
     }
 
-    public String getEmail() {
-        return email;
+    public String getEmail1() {
+        return email1;
     }
 
-    public UserData withEmail(String email) {
-        this.email = email;
+    public UserData withEmail1(String email) {
+        this.email1 = email;
+        return this;
+    }
+
+    public String getEmail2() {
+        return email2;
+    }
+
+    public UserData withEmail2(String email) {
+        this.email2 = email;
+        return this;
+    }
+
+    public String getEmail3() {
+        return email3;
+    }
+
+    public UserData withEmail3(String email) {
+        this.email3 = email;
+        return this;
+    }
+
+    public String getAllEmail() {
+        return allEmail;
+    }
+
+    public UserData withAllEmail(String email) {
+        this.allEmail = email;
         return this;
     }
 
@@ -108,7 +138,7 @@ public class UserData {
                 ", address='" + address + '\'' +
                 ", lastname='" + lastname + '\'' +
                 ", phoneNumber='" + homePhone + '\'' +
-                ", email='" + email + '\'' +
+                ", email='" + email1 + '\'' +
                 '}';
     }
 
@@ -125,7 +155,7 @@ public class UserData {
         if (lastname != null ? !lastname.equals(userData.lastname) : userData.lastname != null) return false;
         if (homePhone != null ? !homePhone.equals(userData.homePhone) : userData.homePhone != null)
             return false;
-        return email != null ? email.equals(userData.email) : userData.email == null;
+        return email1 != null ? email1.equals(userData.email1) : userData.email1 == null;
     }
 
     @Override
@@ -135,7 +165,7 @@ public class UserData {
         result = 31 * result + (address != null ? address.hashCode() : 0);
         result = 31 * result + (lastname != null ? lastname.hashCode() : 0);
         result = 31 * result + (homePhone != null ? homePhone.hashCode() : 0);
-        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (email1 != null ? email1.hashCode() : 0);
         return result;
     }
 }

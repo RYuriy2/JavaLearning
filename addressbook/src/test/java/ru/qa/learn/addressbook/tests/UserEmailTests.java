@@ -7,19 +7,19 @@ import java.util.stream.Collectors;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class UserPhoneTests extends TestBase {
+public class UserEmailTests extends TestBase {
 
     @Test
-    public void testUserPhone(){
+    public void testUserEmail(){
         app.goTo().homePage();
         UserData user = app.user().all().iterator().next();
         UserData userInfoFromEditForm = app.user().infoFromEditForm(user);
 
-        assertThat(user.getAllPhone(), equalTo(mergePhones(userInfoFromEditForm)));
+        assertThat(user.getAllEmail(), equalTo(mergeEmail(userInfoFromEditForm)));
     }
 
-    private String mergePhones(UserData user) {
-        return Arrays.asList(user.getHomePhone(),user.getMobilePhone(),user.getWorkPhone()).stream().filter((s)->!s.equals(""))
+    private String mergeEmail(UserData user) {
+        return Arrays.asList(user.getEmail1(),user.getEmail2(),user.getEmail3()).stream().filter((s)->!s.equals(""))
                 .map(this::cleaned).collect(Collectors.joining("\n"));
     }
 

@@ -16,7 +16,7 @@ public class UserEditTests extends TestBase {
         app.goTo().homePage();
         if (app.user().all().size() == 0) {
             app.user().create(new UserData().withLastname("Михаил").withAddress("Михайлович").withFirstname("Буслаев")
-                    .withHomePhoneNumber("+79009009090").withEmail("test@test.com").withGroup("testGroupnull"), true);
+                    .withHomePhoneNumber("+79009009090").withEmail1("test@test.com").withGroup("testGroupnull"), true);
         }
     }
 
@@ -26,7 +26,7 @@ public class UserEditTests extends TestBase {
         UserData editUser = before.iterator().next();
         UserData user = new UserData().withID(editUser.getID()).withLastname("МихаилNew")
                 .withAddress("МихайловичNew").withFirstname("БуслаевNew").withHomePhoneNumber("+79009009099")
-                .withEmail("testNew@test.com");
+                .withEmail1("testNew@test.com");
 
         app.user().edit(user);
 

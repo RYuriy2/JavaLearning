@@ -38,7 +38,7 @@ public class UserHelper extends HelperBase {
         type(By.name("address"), userData.getAddress());
         type(By.name("lastname"), userData.getLastname());
         type(By.name("mobile"), userData.getHomePhone());
-        type(By.name("email"), userData.getEmail());
+        type(By.name("email"), userData.getEmail1());
         if (creation) {
             new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(userData.getGroup());
         } else Assert.assertFalse(isElementPresent(By.name("new_group")));
@@ -108,7 +108,7 @@ public class UserHelper extends HelperBase {
                     String address = elements.get(3).getText();
                     int id = Integer.parseInt(elements.get(0).findElement(By.name("selected[]")).getAttribute("id"));
                     userCache.add(new UserData().withID(id).withFirstname(firstname).withAddress(address).withLastname(lastname)
-                            .withAllPhoneNumber(allPhones).withEmail(email));
+                            .withAllPhoneNumber(allPhones).withAllEmail(email));
                 }
             }
             return new Users(userCache);
@@ -132,8 +132,12 @@ public class UserHelper extends HelperBase {
         String homephone = wd.findElement(By.name("home")).getAttribute("value");
         String mobilephone = wd.findElement(By.name("mobile")).getAttribute("value");
         String workphone = wd.findElement(By.name("work")).getAttribute("value");
+        String email1 = wd.findElement(By.name("email")).getAttribute("value");
+        String email2 = wd.findElement(By.name("email2")).getAttribute("value");
+        String email3 = wd.findElement(By.name("email3")).getAttribute("value");
         wd.navigate().back();
         return new UserData().withFirstname(firstname).withLastname(lastname)
-                .withHomePhoneNumber(homephone).withMobilePhoneNumber(mobilephone).withWorkPhoneNumber(workphone);
+                .withHomePhoneNumber(homephone).withMobilePhoneNumber(mobilephone).withWorkPhoneNumber(workphone)
+                .withEmail1(email1).withEmail2(email2).withEmail3(email3);
     }
 }
