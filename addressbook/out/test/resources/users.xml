@@ -1,0 +1,35 @@
+<list>
+  <user>
+    <firstname>FirstName 0</firstname>
+    <address>Address 0</address>
+    <lastname>LastName 0</lastname>
+    <homePhone>+7(900)780-82-01</homePhone>
+    <mobilePhone>+7(900)082-37-96</mobilePhone>
+    <workPhone>+7(900)594-31-02</workPhone>
+    <email1>testemail1_0@test.com</email1>
+    <email2>testemail2_0@test.com</email2>
+    <email3>testemail3_0@test.com</email3>
+  </user>
+  <user>
+    <firstname>FirstName 1</firstname>
+    <address>Address 1</address>
+    <lastname>LastName 1</lastname>
+    <homePhone>+7(900)609-02-37</homePhone>
+    <mobilePhone>+7(900)042-78-06</mobilePhone>
+    <workPhone>+7(900)475-47-42</workPhone>
+    <email1>testemail1_1@test.com</email1>
+    <email2>testemail2_1@test.com</email2>
+    <email3>testemail3_1@test.com</email3>
+  </user>
+  <user>
+    <firstname>FirstName 2</firstname>
+    <address>Address 2</address>
+    <lastname>LastName 2</lastname>
+    <homePhone>+7(900)007-89-72</homePhone>
+    <mobilePhone>+7(900)307-68-15</mobilePhone>
+    <workPhone>+7(900)515-50-73</workPhone>
+    <email1>testemail1_2@test.com</email1>
+    <email2>testemail2_2@test.com</email2>
+    <email3>testemail3_2@test.com</email3>
+  </user>
+</list>

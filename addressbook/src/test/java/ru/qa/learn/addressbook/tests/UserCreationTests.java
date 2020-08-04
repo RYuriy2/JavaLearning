@@ -1,5 +1,6 @@
 package ru.qa.learn.addressbook.tests;
 
+import com.thoughtworks.xstream.XStream;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.qa.learn.addressbook.model.GroupData;
@@ -10,7 +11,9 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import static com.google.common.io.Files.getFileExtension;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.testng.Assert.assertEquals;
@@ -19,20 +22,38 @@ public class UserCreationTests extends TestBase {
 
     @DataProvider
     public Iterator<Object[]> validUsers() throws IOException {
-        List<Object[]> list = new ArrayList<Object[]>();
-        BufferedReader reader = new BufferedReader (new FileReader(new File("src/test/resources/users.csv")));
-        String line = reader.readLine();
-        while (line != null){
-            String[] split = line.split(";");
-            list.add(new Object[]{new UserData().withFirstname(split[0]).withLastname(split[1]).withAddress(split[2])
-                    .withHomePhoneNumber(split[3]).withMobilePhoneNumber(split[4]).withWorkPhoneNumber(split[5])
-                    .withEmail1(split[6]).withEmail2(split[7]).withEmail3(split[8])});
-            line = reader.readLine();
+        List<Object[]> fin = new ArrayList<Object[]>();
+        File file = new File("src/test/resources/users.xml");
+        String format = getFileExtension(file.getAbsolutePath());
+        if (format.equals("CSV") || format.equals("csv")) {
+            List<Object[]> list = new ArrayList<Object[]>();
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            String line = reader.readLine();
+            while (line != null) {
+                String[] split = line.split(";");
+                list.add(new Object[]{new UserData().withFirstname(split[0]).withLastname(split[1]).withAddress(split[2])
+                        .withHomePhoneNumber(split[3]).withMobilePhoneNumber(split[4]).withWorkPhoneNumber(split[5])
+                        .withEmail1(split[6]).withEmail2(split[7]).withEmail3(split[8])});
+                line = reader.readLine();
+            }
+            fin = list;
+        }else if (format.equals("XML") || format.equals("xml")) {
+            BufferedReader reader = new BufferedReader (new FileReader(file));
+            String xml = "";
+            String line = reader.readLine();
+            while (line != null){
+                xml += line;
+                line = reader.readLine();
+            }
+            XStream xStream = new XStream();
+            xStream.processAnnotations(UserData.class);
+            List<UserData> users = (List<UserData>) xStream.fromXML(xml);
+            fin = users.stream().map((g)->new Object[] {g}).collect(Collectors.toList());
         }
-        return list.iterator();
+        return fin.iterator();
     }
 
-    @Test(enabled = true,dataProvider = "validUsers")
+    @Test(dataProvider = "validUsers")
     public void testCreationUser(UserData user) {
         app.goTo().homePage();
 
