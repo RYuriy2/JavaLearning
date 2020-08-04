@@ -1,5 +1,6 @@
 package ru.qa.learn.addressbook.model;
 
+import java.io.File;
 import java.util.Objects;
 
 public class UserData {
@@ -16,6 +17,7 @@ public class UserData {
     private String email3;
     private String allEmail;
     private String group;
+    private File photo;
 
     public int getID() {
         return id;
@@ -23,6 +25,15 @@ public class UserData {
 
     public UserData withID(int id) {
         this.id = id;
+        return this;
+    }
+
+    public File getPhoto() {
+        return photo;
+    }
+
+    public UserData withPhoto(File photo) {
+        this.photo = photo;
         return this;
     }
 
