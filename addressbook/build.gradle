@@ -13,3 +13,28 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'com.google.guava:guava-parent:29.0-jre'
 }
+
+task testGroups(type: Test) {
+    useTestNG{
+        suites 'src/test/resources/testNGGroups.xml'
+    }
+    if (project.hasProperty('browser')){
+        systemProperty 'browser', "${browser}"
+    }
+    if (project.hasProperty('target')){
+        systemProperty 'target', "${target}"
+    }
+}
+
+task testUsers(type: Test) {
+    useTestNG{
+        suites 'src/test/resources/testNGUsers.xml'
+    }
+    if (project.hasProperty('browser')){
+        systemProperty 'browser', "${browser}"
+    }
+    if (project.hasProperty('target')){
+        systemProperty 'target', "${target}"
+    }
+
+}

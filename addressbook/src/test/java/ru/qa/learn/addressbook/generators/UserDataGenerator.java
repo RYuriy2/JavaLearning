@@ -53,30 +53,30 @@ public class UserDataGenerator {
     private void saveAsJSON(List<UserData> users, File file) throws IOException {
         Gson gson = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();
         String json = gson.toJson(users);
-        Writer writer = new FileWriter(file);
-        writer.write(json);
-        writer.close();
+        try (Writer writer = new FileWriter(file)) {
+            writer.write(json);
+        }
     }
 
     private void saveAsXML(List<UserData> users, File file) throws IOException {
         XStream xStream = new XStream();
         xStream.processAnnotations(UserData.class);
         String xml = xStream.toXML(users);
-        Writer writer = new FileWriter(file);
-        writer.write(xml);
-        writer.close();
+        try (Writer writer = new FileWriter(file)) {
+            writer.write(xml);
+        }
     }
 
     private void saveAsCSV(List<UserData> users, File file) throws IOException {
         System.out.println(new File(".").getAbsolutePath());
-        Writer writer = new FileWriter(file);
-        for (UserData user : users) {
-            writer.write(String.format("%s;%s;%s;%s;%s;%s;%s;%s;%s\n"
-                    , user.getFirstname(), user.getLastname(), user.getAddress()
-                    , user.getHomePhone(), user.getMobilePhone(), user.getWorkPhone()
-                    , user.getEmail1(), user.getEmail2(), user.getEmail3()));
+        try (Writer writer = new FileWriter(file)) {
+            for (UserData user : users) {
+                writer.write(String.format("%s;%s;%s;%s;%s;%s;%s;%s;%s\n"
+                        , user.getFirstname(), user.getLastname(), user.getAddress()
+                        , user.getHomePhone(), user.getMobilePhone(), user.getWorkPhone()
+                        , user.getEmail1(), user.getEmail2(), user.getEmail3()));
+            }
         }
-        writer.close();
     }
 
     private List<UserData> generateUsers(int count) {

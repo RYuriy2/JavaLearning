@@ -29,39 +29,43 @@ public class UserCreationTests extends TestBase {
         String format = getFileExtension(file.getAbsolutePath());
         if (format.equals("CSV") || format.equals("csv")) {
             List<Object[]> list = new ArrayList<Object[]>();
-            BufferedReader reader = new BufferedReader(new FileReader(file));
-            String line = reader.readLine();
-            while (line != null) {
-                String[] split = line.split(";");
-                list.add(new Object[]{new UserData().withFirstname(split[0]).withLastname(split[1]).withAddress(split[2])
-                        .withHomePhoneNumber(split[3]).withMobilePhoneNumber(split[4]).withWorkPhoneNumber(split[5])
-                        .withEmail1(split[6]).withEmail2(split[7]).withEmail3(split[8])});
-                line = reader.readLine();
+            try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+                String line = reader.readLine();
+                while (line != null) {
+                    String[] split = line.split(";");
+                    list.add(new Object[]{new UserData().withFirstname(split[0]).withLastname(split[1]).withAddress(split[2])
+                            .withHomePhoneNumber(split[3]).withMobilePhoneNumber(split[4]).withWorkPhoneNumber(split[5])
+                            .withEmail1(split[6]).withEmail2(split[7]).withEmail3(split[8])});
+                    line = reader.readLine();
+                }
+                fin = list;
             }
-            fin = list;
         }else if (format.equals("XML") || format.equals("xml")) {
-            BufferedReader reader = new BufferedReader (new FileReader(file));
-            String xml = "";
-            String line = reader.readLine();
-            while (line != null){
-                xml += line;
-                line = reader.readLine();
+            try (BufferedReader reader = new BufferedReader (new FileReader(file))) {
+                String xml = "";
+                String line = reader.readLine();
+                while (line != null) {
+                    xml += line;
+                    line = reader.readLine();
+                }
+                XStream xStream = new XStream();
+                xStream.processAnnotations(UserData.class);
+                List<UserData> users = (List<UserData>) xStream.fromXML(xml);
+                fin = users.stream().map((g) -> new Object[]{g}).collect(Collectors.toList());
             }
-            XStream xStream = new XStream();
-            xStream.processAnnotations(UserData.class);
-            List<UserData> users = (List<UserData>) xStream.fromXML(xml);
-            fin = users.stream().map((g)->new Object[] {g}).collect(Collectors.toList());
         }else if (format.equals("JSON") || format.equals("json")) {
-            BufferedReader reader = new BufferedReader (new FileReader(file));
-            String json = "";
-            String line = reader.readLine();
-            while (line != null){
-                json += line;
-                line = reader.readLine();
+            try (BufferedReader reader = new BufferedReader (new FileReader(file))) {
+                String json = "";
+                String line = reader.readLine();
+                while (line != null) {
+                    json += line;
+                    line = reader.readLine();
+                }
+                Gson gson = new Gson();
+                List<UserData> users = gson.fromJson(json, new TypeToken<List<UserData>>() {
+                }.getType());
+                fin = users.stream().map((g) -> new Object[]{g}).collect(Collectors.toList());
             }
-            Gson gson = new Gson();
-            List<UserData> users = gson.fromJson(json, new TypeToken<List<UserData>>(){}.getType());
-            fin = users.stream().map((g)->new Object[] {g}).collect(Collectors.toList());
         }
         return fin.iterator();
     }
