@@ -1,5 +1,7 @@
 package ru.qa.learn.addressbook.tests;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.thoughtworks.xstream.XStream;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -23,7 +25,7 @@ public class UserCreationTests extends TestBase {
     @DataProvider
     public Iterator<Object[]> validUsers() throws IOException {
         List<Object[]> fin = new ArrayList<Object[]>();
-        File file = new File("src/test/resources/users.xml");
+        File file = new File("src/test/resources/users.json");
         String format = getFileExtension(file.getAbsolutePath());
         if (format.equals("CSV") || format.equals("csv")) {
             List<Object[]> list = new ArrayList<Object[]>();
@@ -49,6 +51,17 @@ public class UserCreationTests extends TestBase {
             xStream.processAnnotations(UserData.class);
             List<UserData> users = (List<UserData>) xStream.fromXML(xml);
             fin = users.stream().map((g)->new Object[] {g}).collect(Collectors.toList());
+        }else if (format.equals("JSON") || format.equals("json")) {
+            BufferedReader reader = new BufferedReader (new FileReader(file));
+            String json = "";
+            String line = reader.readLine();
+            while (line != null){
+                json += line;
+                line = reader.readLine();
+            }
+            Gson gson = new Gson();
+            List<UserData> users = gson.fromJson(json, new TypeToken<List<UserData>>(){}.getType());
+            fin = users.stream().map((g)->new Object[] {g}).collect(Collectors.toList());
         }
         return fin.iterator();
     }
@@ -62,7 +75,7 @@ public class UserCreationTests extends TestBase {
 
         app.user().create(user, true);
 
-//        assertEquals(app.user().getUserCount(), before.size() + 1);
+        assertEquals(app.user().getUserCount(), before.size() + 1);
         Users after = app.user().all();
         assertThat(after, equalTo
                 (before.withAdded(user.withID((after.stream().mapToInt((u) -> u.getID()).max().getAsInt())))));

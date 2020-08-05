@@ -3,6 +3,8 @@ package ru.qa.learn.addressbook.generators;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.ParameterException;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.thoughtworks.xstream.XStream;
 import ru.qa.learn.addressbook.model.GroupData;
 
@@ -15,21 +17,21 @@ import java.util.List;
 
 public class GroupDataGenerator {
 
-    @Parameter(names = "-c",description = "GroupsCount")
+    @Parameter(names = "-c", description = "GroupsCount")
     public int count;
 
-    @Parameter(names = "-f",description = "Target file")
+    @Parameter(names = "-f", description = "Target file")
     public String file;
 
-    @Parameter(names = "-d",description = "Data format")
+    @Parameter(names = "-d", description = "Data format")
     public String format;
 
-    public static void main (String[] args) throws IOException {
+    public static void main(String[] args) throws IOException {
         GroupDataGenerator generator = new GroupDataGenerator();
         JCommander jCommander = new JCommander(generator);
         try {
             jCommander.parse(args);
-        } catch (ParameterException ex){
+        } catch (ParameterException ex) {
             jCommander.usage();
             return;
         }
@@ -38,14 +40,24 @@ public class GroupDataGenerator {
 
     private void run() throws IOException {
         List<GroupData> groups = generateGroups(count);
-        if (format.equals("CSV") || format.equals("csv")){
-            saveAsCSV(groups,new File(file));
-        }else if (format.equals("XML") || format.equals("xml")) {
-            saveAsXML(groups,new File(file));
+        if (format.equals("CSV") || format.equals("csv")) {
+            saveAsCSV(groups, new File(file));
+        } else if (format.equals("XML") || format.equals("xml")) {
+            saveAsXML(groups, new File(file));
+        } else if (format.equals("JSON") || format.equals("json")) {
+            saveAsJSON(groups, new File(file));
         } else {
             System.out.println("unrecognized format " + format);
         }
 
+    }
+
+    private void saveAsJSON(List<GroupData> groups, File file) throws IOException {
+        Gson gson = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();
+        String json = gson.toJson(groups);
+        Writer writer = new FileWriter(file);
+        writer.write(json);
+        writer.close();
     }
 
     private void saveAsXML(List<GroupData> groups, File file) throws IOException {
@@ -61,16 +73,16 @@ public class GroupDataGenerator {
         System.out.println(new File(".").getAbsolutePath());
         Writer writer = new FileWriter(file);
         for (GroupData group : groups) {
-            writer.write(String.format("%s;%s;%s\n",group.getName(),group.getHeader(),group.getFooter()));
+            writer.write(String.format("%s;%s;%s\n", group.getName(), group.getHeader(), group.getFooter()));
         }
         writer.close();
     }
 
     private List<GroupData> generateGroups(int count) {
         List<GroupData> groups = new ArrayList<GroupData>();
-        for (int i = 0; i<count; i++) {
-            groups.add(new GroupData().withName(String.format("test %s",i)).withHeader(String.format("header %s",i))
-                    .withFooter(String.format("footer %s",i)));
+        for (int i = 0; i < count; i++) {
+            groups.add(new GroupData().withName(String.format("test %s", i)).withHeader(String.format("header %s", i))
+                    .withFooter(String.format("footer %s", i)));
         }
         return groups;
     }

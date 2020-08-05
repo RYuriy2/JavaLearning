@@ -3,6 +3,8 @@ package ru.qa.learn.addressbook.generators;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.ParameterException;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.thoughtworks.xstream.XStream;
 import ru.qa.learn.addressbook.model.UserData;
 import java.io.File;
@@ -41,9 +43,19 @@ public class UserDataGenerator {
             saveAsCSV(users,new File(file));
         }else if (format.equals("XML") || format.equals("xml")) {
             saveAsXML(users,new File(file));
+        }else if (format.equals("JSON") || format.equals("json")) {
+            saveAsJSON(users,new File(file));
         } else {
             System.out.println("unrecognized format " + format);
         }
+    }
+
+    private void saveAsJSON(List<UserData> users, File file) throws IOException {
+        Gson gson = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();
+        String json = gson.toJson(users);
+        Writer writer = new FileWriter(file);
+        writer.write(json);
+        writer.close();
     }
 
     private void saveAsXML(List<UserData> users, File file) throws IOException {

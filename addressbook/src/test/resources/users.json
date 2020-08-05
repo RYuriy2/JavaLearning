@@ -1,0 +1,35 @@
+[
+  {
+    "firstname": "FirstName 0",
+    "address": "Address 0",
+    "lastname": "LastName 0",
+    "homePhone": "+7(900)596-22-43",
+    "mobilePhone": "+7(900)290-32-87",
+    "workPhone": "+7(900)492-16-38",
+    "email1": "testemail1_0@test.com",
+    "email2": "testemail2_0@test.com",
+    "email3": "testemail3_0@test.com"
+  },
+  {
+    "firstname": "FirstName 1",
+    "address": "Address 1",
+    "lastname": "LastName 1",
+    "homePhone": "+7(900)934-71-07",
+    "mobilePhone": "+7(900)688-74-52",
+    "workPhone": "+7(900)779-09-99",
+    "email1": "testemail1_1@test.com",
+    "email2": "testemail2_1@test.com",
+    "email3": "testemail3_1@test.com"
+  },
+  {
+    "firstname": "FirstName 2",
+    "address": "Address 2",
+    "lastname": "LastName 2",
+    "homePhone": "+7(900)307-28-87",
+    "mobilePhone": "+7(900)762-06-38",
+    "workPhone": "+7(900)201-83-92",
+    "email1": "testemail1_2@test.com",
+    "email2": "testemail2_2@test.com",
+    "email3": "testemail3_2@test.com"
+  }
+]

@@ -1,5 +1,7 @@
 package ru.qa.learn.addressbook.tests;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.thoughtworks.xstream.XStream;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -22,7 +24,7 @@ public class GroupCreationTests extends TestBase {
     @DataProvider
     public Iterator<Object[]> validGroups() throws IOException {
         List<Object[]> fin = new ArrayList<Object[]>();
-        File file = new File("src/test/resources/groups.csv");
+        File file = new File("src/test/resources/groups.json");
         String format = getFileExtension(file.getAbsolutePath());
         if (format.equals("CSV") || format.equals("csv")) {
             List<Object[]> list = new ArrayList<Object[]>();
@@ -45,6 +47,17 @@ public class GroupCreationTests extends TestBase {
             XStream xStream = new XStream();
             xStream.processAnnotations(GroupData.class);
             List<GroupData> groups = (List<GroupData>) xStream.fromXML(xml);
+            fin = groups.stream().map((g)->new Object[] {g}).collect(Collectors.toList());
+        }else if (format.equals("JSON") || format.equals("json")) {
+            BufferedReader reader = new BufferedReader (new FileReader(file));
+            String json = "";
+            String line = reader.readLine();
+            while (line != null){
+                json += line;
+                line = reader.readLine();
+            }
+            Gson gson = new Gson();
+            List<GroupData> groups = gson.fromJson(json, new TypeToken<List<GroupData>>(){}.getType());
             fin = groups.stream().map((g)->new Object[] {g}).collect(Collectors.toList());
         }
         return fin.iterator();
