@@ -13,8 +13,8 @@ public class UserEditTests extends TestBase {
 
     @BeforeMethod
     public void ensurePrecondition() {
-        app.goTo().homePage();
-        if (app.user().all().size() == 0) {
+        if (app.db().users().size() == 0) {
+            app.goTo().homePage();
             app.user().create(new UserData().withLastname("Михаил").withAddress("Михайлович").withFirstname("Буслаев")
                     .withHomePhoneNumber("+79009009090").withEmail1("test@test.com").withGroup("testGroupnull"), true);
         }
@@ -22,16 +22,18 @@ public class UserEditTests extends TestBase {
 
     @Test(enabled = true)
     public void testEditUser() {
-        Users before = app.user().all();
+        Users before = app.db().users();
         UserData editUser = before.iterator().next();
         UserData user = new UserData().withID(editUser.getID()).withLastname("МихаилNew")
                 .withAddress("МихайловичNew").withFirstname("БуслаевNew").withHomePhoneNumber("+79009009099")
                 .withEmail1("testNew@test.com");
 
+        app.goTo().homePage();
+
         app.user().edit(user);
 
         assertEquals(app.user().getUserCount(), before.size());
-        Users after = app.user().all();
+        Users after = app.db().users();
         assertThat(after, equalTo(before.without(editUser).withAdded(user)));
     }
 

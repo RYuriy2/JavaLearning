@@ -74,13 +74,13 @@ public class UserCreationTests extends TestBase {
     public void testCreationUser(UserData user) {
         app.goTo().homePage();
 
-        Users before = app.user().all();
+        Users before = app.db().users();
         File photo = new File("src/test/resources/test1.jpeg");
 
         app.user().create(user, true);
 
         assertEquals(app.user().getUserCount(), before.size() + 1);
-        Users after = app.user().all();
+        Users after = app.db().users();
         assertThat(after, equalTo
                 (before.withAdded(user.withID((after.stream().mapToInt((u) -> u.getID()).max().getAsInt())))));
 

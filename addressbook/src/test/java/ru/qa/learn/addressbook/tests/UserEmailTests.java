@@ -9,7 +9,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class UserEmailTests extends TestBase {
 
-    @Test
+    @Test(enabled = false)
     public void testUserEmail(){
         app.goTo().homePage();
         UserData user = app.user().all().iterator().next();

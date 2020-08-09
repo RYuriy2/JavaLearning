@@ -13,8 +13,8 @@ public class UserDelitionTests extends TestBase {
 
     @BeforeMethod
     public void ensurePrecondition() {
-        app.goTo().homePage();
-        if (app.user().all().size() == 0) {
+        if (app.db().users().size() == 0) {
+            app.goTo().homePage();
             app.user().create(new UserData().withLastname("Михаил").withAddress("Михайлович").withFirstname("Буслаев")
                     .withHomePhoneNumber("+79009009090").withEmail1("test@test.com").withGroup("testGroupnull"), true);
         }
@@ -22,14 +22,16 @@ public class UserDelitionTests extends TestBase {
 
     @Test(enabled = true)
     public void testDelitionUser() {
-        Users before = app.user().all();
+        Users before = app.db().users();
         UserData deletedUser = before.iterator().next();
+
+        app.goTo().homePage();
 
         app.user().delete(deletedUser);
 
         assertEquals(app.user().getUserCount(), before.size() - 1);
-        Users after = app.user().all();
         before.remove(deletedUser);
+        Users after = app.db().users();
         assertThat(after, equalTo(before.without(deletedUser)));
     }
 

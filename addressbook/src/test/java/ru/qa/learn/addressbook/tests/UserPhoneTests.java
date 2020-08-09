@@ -9,7 +9,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class UserPhoneTests extends TestBase {
 
-    @Test
+    @Test(enabled = false)
     public void testUserPhone(){
         app.goTo().homePage();
         UserData user = app.user().all().iterator().next();
