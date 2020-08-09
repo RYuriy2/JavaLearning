@@ -8,7 +8,6 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import ru.qa.learn.addressbook.appmanager.ApplicationManager;
-
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
