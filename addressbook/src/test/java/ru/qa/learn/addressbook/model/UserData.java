@@ -192,12 +192,15 @@ public class UserData {
         UserData userData = (UserData) o;
         return id == userData.id &&
                 Objects.equals(firstname, userData.firstname) &&
-                Objects.equals(lastname, userData.lastname);
+                Objects.equals(address, userData.address) &&
+                Objects.equals(lastname, userData.lastname) &&
+                Objects.equals(homePhone, userData.homePhone) &&
+                Objects.equals(email1, userData.email1);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstname, lastname);
+        return Objects.hash(id, firstname, address, lastname, homePhone, email1);
     }
 
     @Override

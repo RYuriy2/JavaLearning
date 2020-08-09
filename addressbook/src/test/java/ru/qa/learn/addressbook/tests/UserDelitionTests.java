@@ -33,6 +33,7 @@ public class UserDelitionTests extends TestBase {
         before.remove(deletedUser);
         Users after = app.db().users();
         assertThat(after, equalTo(before.without(deletedUser)));
+        verifyUserListInUI();
     }
 
 }

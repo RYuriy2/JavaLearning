@@ -7,7 +7,6 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import ru.qa.learn.addressbook.model.GroupData;
 import ru.qa.learn.addressbook.model.UserData;
 
 import java.util.List;
