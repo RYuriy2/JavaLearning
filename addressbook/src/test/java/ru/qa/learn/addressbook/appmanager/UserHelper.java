@@ -44,9 +44,11 @@ public class UserHelper extends HelperBase {
         type(By.name("email2"), userData.getEmail2());
         type(By.name("email3"), userData.getEmail3());
 //        attach(By.name("photo"),userData.getPhoto());
-        if (userData.getGroup() != null) {
+        if (userData.getGroups().size() > 0) {
             if (creation) {
-                new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(userData.getGroup());
+                Assert.assertTrue(userData.getGroups().size() == 1);
+                new Select(wd.findElement(By.name("new_group")))
+                        .selectByVisibleText(userData.getGroups().iterator().next().getName());
             } else Assert.assertFalse(isElementPresent(By.name("new_group")));
         }
     }

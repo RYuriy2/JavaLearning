@@ -6,6 +6,7 @@ import com.thoughtworks.xstream.XStream;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.qa.learn.addressbook.model.GroupData;
+import ru.qa.learn.addressbook.model.Groups;
 import ru.qa.learn.addressbook.model.UserData;
 import ru.qa.learn.addressbook.model.Users;
 

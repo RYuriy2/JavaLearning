@@ -6,7 +6,18 @@ import com.beust.jcommander.ParameterException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.thoughtworks.xstream.XStream;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import ru.qa.learn.addressbook.appmanager.ApplicationManager;
+import ru.qa.learn.addressbook.appmanager.DBHelper;
+import ru.qa.learn.addressbook.model.GroupData;
+import ru.qa.learn.addressbook.model.Groups;
 import ru.qa.learn.addressbook.model.UserData;
+import ru.qa.learn.addressbook.tests.TestBase;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -14,7 +25,7 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDataGenerator {
+public class UserDataGenerator extends TestBase {
 
     @Parameter(names = "-c",description = "GroupsCount")
     public int count;
@@ -24,6 +35,7 @@ public class UserDataGenerator {
 
     @Parameter(names = "-d",description = "Data format")
     public String format;
+    private SessionFactory sessionFactory;
 
     public static void main(String[] args) throws IOException {
         UserDataGenerator generator = new UserDataGenerator();
@@ -71,15 +83,24 @@ public class UserDataGenerator {
         System.out.println(new File(".").getAbsolutePath());
         try (Writer writer = new FileWriter(file)) {
             for (UserData user : users) {
-                writer.write(String.format("%s;%s;%s;%s;%s;%s;%s;%s;%s\n"
+                writer.write(String.format("%s;%s;%s;%s;%s;%s;%s;%s;%s;%s\n"
                         , user.getFirstname(), user.getLastname(), user.getAddress()
                         , user.getHomePhone(), user.getMobilePhone(), user.getWorkPhone()
-                        , user.getEmail1(), user.getEmail2(), user.getEmail3()));
+                        , user.getEmail1(), user.getEmail2(), user.getEmail3(),
+                        user.getGroups().iterator().next().getName()));
             }
         }
     }
 
-    private List<UserData> generateUsers(int count) {
+    private List<UserData> generateUsers(int count) throws IOException {
+        connectDB();
+        Groups groups = getGroups();
+        if (groups.size() == 0){
+            app.init();
+            app.goTo().groupPage();
+            app.group().create(new GroupData().withName("testnew"));
+            app.stop();
+        }
         List<UserData> users = new ArrayList<UserData>();
         for (int i = 0; i < count; i++) {
             users.add(new UserData().withFirstname(String.format("FirstName %s", i))
@@ -90,7 +111,8 @@ public class UserDataGenerator {
                     .withWorkPhoneNumber(phoneGenerator())
                     .withEmail1(String.format("testemail1_%s@test.com", i))
                     .withEmail2(String.format("testemail2_%s@test.com", i))
-                    .withEmail3(String.format("testemail3_%s@test.com", i)));
+                    .withEmail3(String.format("testemail3_%s@test.com", i))
+                    .inGroup(groups.iterator().next()));
         }
         return users;
     }
@@ -105,6 +127,22 @@ public class UserDataGenerator {
     private static int randomGenerate() {
         int a = (int) (Math.random() * 10);
         return a;
+    }
+
+    private void connectDB() {
+        final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
+                .configure() // configures settings from hibernate.cfg.xml
+                .build();
+        sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
+    }
+
+    private Groups getGroups(){
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        List<GroupData> result = session.createQuery( "from GroupData" ).list();
+        session.getTransaction().commit();
+        session.close();
+        return new Groups(result);
     }
 
 }

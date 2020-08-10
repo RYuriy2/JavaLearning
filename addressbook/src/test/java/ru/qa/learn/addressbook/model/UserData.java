@@ -3,11 +3,15 @@ package ru.qa.learn.addressbook.model;
 import com.google.gson.annotations.Expose;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import org.hibernate.annotations.ManyToAny;
 import org.hibernate.annotations.Type;
+import ru.qa.learn.addressbook.appmanager.DBHelper;
 
 import javax.persistence.*;
 import java.io.File;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @XStreamAlias("user")
 @Entity
@@ -55,11 +59,18 @@ public class UserData {
     private String email3;
     @Transient
     private String allEmail;
-    @Transient
-    private String group;
     @Column(name = "photo")
     @Type(type = "text")
     private String photo;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "address_in_groups",
+            joinColumns = @JoinColumn(name = "id"),
+            inverseJoinColumns = @JoinColumn(name = "group_id"))
+    private Set<GroupData> groups = new HashSet<GroupData>();
+
+    public Groups getGroups() {
+        return new Groups(groups);
+    }
 
     public int getID() {
         return id;
@@ -178,13 +189,6 @@ public class UserData {
         return this;
     }
 
-    public String getGroup() { return group; }
-
-    public UserData withGroup(String group) {
-        this.group = group;
-        return this;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -221,4 +225,8 @@ public class UserData {
                 '}';
     }
 
+    public UserData inGroup(GroupData group) {
+        groups.add(group);
+        return this;
+    }
 }

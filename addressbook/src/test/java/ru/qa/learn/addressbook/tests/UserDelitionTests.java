@@ -16,7 +16,7 @@ public class UserDelitionTests extends TestBase {
         if (app.db().users().size() == 0) {
             app.goTo().homePage();
             app.user().create(new UserData().withLastname("Михаил").withAddress("Михайлович").withFirstname("Буслаев")
-                    .withHomePhoneNumber("+79009009090").withEmail1("test@test.com").withGroup("testGroupnull"), true);
+                    .withHomePhoneNumber("+79009009090").withEmail1("test@test.com")/*.withGroup("testGroupnull")*/, true);
         }
     }
 

@@ -9,8 +9,6 @@ import ru.qa.learn.addressbook.model.GroupData;
 import ru.qa.learn.addressbook.model.Groups;
 import ru.qa.learn.addressbook.model.UserData;
 import ru.qa.learn.addressbook.model.Users;
-
-import java.security.acl.Group;
 import java.util.List;
 
 public class DBHelper {
