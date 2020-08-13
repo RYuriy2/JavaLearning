@@ -5,6 +5,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
+import ru.qa.learn.addressbook.model.GroupData;
+import ru.qa.learn.addressbook.model.Groups;
 import ru.qa.learn.addressbook.model.UserData;
 import ru.qa.learn.addressbook.model.Users;
 
@@ -148,5 +150,35 @@ public class UserHelper extends HelperBase {
         return new UserData().withFirstname(firstname).withLastname(lastname)
                 .withHomePhoneNumber(homephone).withMobilePhoneNumber(mobilephone).withWorkPhoneNumber(workphone)
                 .withEmail1(email1).withEmail2(email2).withEmail3(email3);
+    }
+
+    public void selectGroup(GroupData group) {
+        String groupName = group.getName();
+        new Select(wd.findElement(By.name("to_group")))
+                .selectByVisibleText(groupName);
+    }
+
+    public void addToGroup(UserData user, GroupData additionGroup) {
+        selectGroup(additionGroup);
+        selectUserByID(user.getID());
+        click(By.name("add"));
+        user.inGroup(additionGroup);
+    }
+
+    public Groups groupsWithoutUser(UserData user, Groups groups) {
+        Groups userGroups = user.getGroups();
+        Groups groupsWithoutUser = new Groups(groups);
+        groupsWithoutUser.removeAll(userGroups);
+        return groupsWithoutUser;
+    }
+
+    public void delitionUserFromGroup(GroupData group, UserData user) {
+        String groupName = group.getName();
+        new Select(wd.findElement(By.name("group")))
+                .selectByVisibleText(groupName);
+        selectUserByID(user.getID());
+        user.removeGroups(group);
+        click(By.name("remove"));
+        returnToHomePage();
     }
 }

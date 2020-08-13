@@ -3,10 +3,7 @@ package ru.qa.learn.addressbook.model;
 import com.google.gson.annotations.Expose;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
-import org.hibernate.annotations.ManyToAny;
 import org.hibernate.annotations.Type;
-import ru.qa.learn.addressbook.appmanager.DBHelper;
-
 import javax.persistence.*;
 import java.io.File;
 import java.util.HashSet;
@@ -70,6 +67,11 @@ public class UserData {
 
     public Groups getGroups() {
         return new Groups(groups);
+    }
+
+    public UserData removeGroups(GroupData group) {
+        groups.remove(group);
+        return this;
     }
 
     public int getID() {
