@@ -28,7 +28,7 @@ public class UserDelitionFromGroupTests extends TestBase {
                     .withEmail1("test@test.com")                        //E-mail
                     .inGroup(app.db().groups().iterator().next())       //Группа
                     , true);
-        } else {                                                        //Если есть хотя бы один пользователь
+        }
             for (UserData user : users){                                //То по всему списку пользователей
                 if (user.getGroups().size() == 0){                      //Проверяем, состоит ли он хотя бы в одной группе
                     users.remove(user);                                 //Удаляем из списка пользователей тех, кто не состоит ни в одной группе
@@ -38,7 +38,7 @@ public class UserDelitionFromGroupTests extends TestBase {
                 app.user().addToGroup(app.db().users().iterator().next()//Добавляем случайного пользователя
                         ,app.db().groups().iterator().next());          //В случайную группу
             }
-        }
+
     }
 
     @Test

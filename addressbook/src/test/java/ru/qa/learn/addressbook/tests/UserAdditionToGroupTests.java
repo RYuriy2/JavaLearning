@@ -29,7 +29,7 @@ public class UserAdditionToGroupTests extends TestBase {
                             .withEmail1("test@test.com")                        //E-mail
                             .inGroup(app.db().groups().iterator().next())       //Группа
                     , true);
-        } else {                                                                //Если есть хотя бы один пользователь
+        }
             for (UserData user : users){                                        //То по всему списку пользователей
                 if (user.getGroups().size() == app.db().groups().size()){       //Проверяем каждого пользователя, состоит ли он во всех группах
                     users.remove(user);                                         //И удаляем из списка тех, кто состоит во всех
@@ -39,7 +39,6 @@ public class UserAdditionToGroupTests extends TestBase {
                 app.goTo().groupPage();                                         //То переходим на страницу групп
                 app.group().create(new GroupData().withName("testnew3"));       //И добавляем новую группу с заданным именем
             }
-        }
     }
 
     @Test
