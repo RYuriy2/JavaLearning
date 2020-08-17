@@ -20,6 +20,9 @@ public class ApplicationManager {
     private FtpHelper ftp;
     private MailHelper mailHelper;
     private JamesHelper jamesHelper;
+    private DBHelper db;
+    private ResetPasswordHelper rspass;
+
 
     public ApplicationManager(String browser)  {
         this.browser = browser;
@@ -89,5 +92,19 @@ public class ApplicationManager {
             jamesHelper = new JamesHelper(this);
         }
         return jamesHelper;
+    }
+
+    public DBHelper db(){
+        if (db == null){
+            db = new DBHelper(this);
+        }
+        return db;
+    }
+
+    public ResetPasswordHelper rsPass(){
+        if (rspass == null){
+            rspass = new ResetPasswordHelper(this);
+        }
+        return rspass;
     }
 }

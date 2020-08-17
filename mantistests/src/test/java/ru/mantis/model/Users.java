@@ -1,4 +1,4 @@
-package ru.qa.learn.addressbook.model;
+package ru.mantis.model;
 
 import com.google.common.collect.ForwardingSet;
 import java.util.Collection;
@@ -24,17 +24,5 @@ public class Users extends ForwardingSet<UserData> {
     @Override
     protected Set<UserData> delegate() {
         return delegate;
-    }
-
-    public Users withAdded(UserData user){
-        Users users = new Users(this);
-        users.add(user);
-        return users;
-    }
-
-    public Users without(UserData user){
-        Users users = new Users(this);
-        users.remove(user);
-        return users;
     }
 }
