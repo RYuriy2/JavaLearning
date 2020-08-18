@@ -23,13 +23,19 @@ public class ResetPassword extends TestBase {
     @Test
     public void resetPasswordTest() throws IOException, MessagingException {
         Users users = app.db().users();
-        String username = "userResetPassword";
-        String email = "";
+        UserData admin = new UserData();
+        for (UserData user : users){
+            if (user.getUsername().equals("administartor")){
+                admin = user;
+            }
+        }
+        users.remove(admin);
+        UserData user = users.iterator().next();
         String newPassword = "QQqq2222!";
         app.rsPass().login(app.getProperty("web.login"),app.getProperty("web.password"));
-        app.rsPass().resetPassword(username);
-        app.rsPass().confirmResetPassword(users,username,newPassword,email);
-        assertTrue(app.newSession().login(username,newPassword));
+        app.rsPass().resetPassword(user.getUsername());
+        app.rsPass().confirmResetPassword(user,newPassword);
+        assertTrue(app.newSession().login(user.getUsername(),newPassword));
     }
 
     @AfterMethod(alwaysRun = true)

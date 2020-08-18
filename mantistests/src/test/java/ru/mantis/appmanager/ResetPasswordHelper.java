@@ -30,12 +30,9 @@ public class ResetPasswordHelper extends HelperBase {
         click(By.cssSelector("input[value='Сбросить пароль']"));
     }
 
-    public void confirmResetPassword(Users users, String username, String password, String email) throws IOException, MessagingException {
-        for (UserData user : users){
-            if (user.getUsername().equals(username)){
-                email = user.getEmail();
-            }
-        }
+    public void confirmResetPassword(UserData user, String password) throws IOException, MessagingException {
+        String email = user.getEmail();
+        String username = user.getUsername();
         List<MailMessage> mailMessages = app.mail().waitForMail(1, 1000000);
         String confirmationLink = app.mail().findConfirmationLink(mailMessages, email);
         wd.get(confirmationLink);
