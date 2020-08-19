@@ -3,3 +3,4 @@
 build/
 recordingTest/
 *.log
+soap/

@@ -6,7 +6,6 @@ import ru.qa.learn.addressbook.model.GroupData;
 import ru.qa.learn.addressbook.model.Groups;
 import ru.qa.learn.addressbook.model.UserData;
 import ru.qa.learn.addressbook.model.Users;
-
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
