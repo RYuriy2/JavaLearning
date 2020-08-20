@@ -5,6 +5,7 @@ public class Issue {
     private String summary;
     private String description;
     private Project project;
+    private Resolution resolution;
 
     public int getId() {
         return id;
@@ -12,6 +13,15 @@ public class Issue {
 
     public Issue withId(int id) {
         this.id = id;
+        return this;
+    }
+
+    public Resolution getResolution() {
+        return resolution;
+    }
+
+    public Issue withResolution(Resolution resolution) {
+        this.resolution = resolution;
         return this;
     }
 

@@ -1,12 +1,17 @@
 package ru.mantis.tests;
 
 import org.openqa.selenium.remote.BrowserType;
+import org.testng.SkipException;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import ru.mantis.appmanager.ApplicationManager;
+import ru.mantis.model.Resolution;
 
+import javax.xml.rpc.ServiceException;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.rmi.RemoteException;
 
 public class TestBase {
 
@@ -21,12 +26,23 @@ public class TestBase {
                 ,"config_defaults_inc.php", "config_defaults_inc.php.bak");
     }
 
+    public boolean isIssueOpen(int issueId) throws RemoteException, ServiceException, MalformedURLException {
+        Resolution resolution = app.soap().issueResolution(issueId);
+        if (resolution.getId() != 10) {
+            return false;
+        } else {return true;}
+    }
+
+    public void skipIfNotFixed(int issueId) throws RemoteException, ServiceException, MalformedURLException {
+        if (isIssueOpen(issueId)) {
+            throw new SkipException("Ignored because of issue " + issueId);
+        }
+    }
+
     @AfterSuite (alwaysRun = true)
     public void tearDown() throws IOException {
         app.ftp().restore("config_defaults_inc.php.bak","config_defaults_inc.php");
         app.stop();
     }
-
-
 
 }
