@@ -1,59 +1,59 @@
 <list>
-  <user>
-    <firstname>FirstName 0</firstname>
-    <address>Address 0</address>
-    <lastname>LastName 0</lastname>
-    <homePhone>+7(900)372-17-25</homePhone>
-    <mobilePhone>+7(900)500-59-28</mobilePhone>
-    <workPhone>+7(900)874-32-89</workPhone>
-    <email1>testemail1_0@test.com</email1>
-    <email2>testemail2_0@test.com</email2>
-    <email3>testemail3_0@test.com</email3>
-    <groups>
-      <group>
-        <name>testGroupEdit1last</name>
-        <header>testHeader1Edit1last</header>
-        <footer>testFooter1Edit1last</footer>
-        <users class="org.hibernate.collection.internal.PersistentSet">
-          <isTempSession>false</isTempSession>
-          <initialized>false</initialized>
-          <owner class="group" reference="../.."/>
-          <cachedSize>-1</cachedSize>
-          <role>ru.qa.learn.addressbook.model.GroupData.users</role>
-          <key class="int">92</key>
-          <dirty>false</dirty>
-          <elementRemoved>false</elementRemoved>
-          <allowLoadOutsideTransaction>false</allowLoadOutsideTransaction>
-        </users>
-      </group>
-    </groups>
-  </user>
-  <user>
-    <firstname>FirstName 1</firstname>
-    <address>Address 1</address>
-    <lastname>LastName 1</lastname>
-    <homePhone>+7(900)783-21-51</homePhone>
-    <mobilePhone>+7(900)264-04-93</mobilePhone>
-    <workPhone>+7(900)609-06-08</workPhone>
-    <email1>testemail1_1@test.com</email1>
-    <email2>testemail2_1@test.com</email2>
-    <email3>testemail3_1@test.com</email3>
-    <groups>
-      <group reference="../../../user/groups/group"/>
-    </groups>
-  </user>
-  <user>
-    <firstname>FirstName 2</firstname>
-    <address>Address 2</address>
-    <lastname>LastName 2</lastname>
-    <homePhone>+7(900)289-88-23</homePhone>
-    <mobilePhone>+7(900)621-25-08</mobilePhone>
-    <workPhone>+7(900)387-13-04</workPhone>
-    <email1>testemail1_2@test.com</email1>
-    <email2>testemail2_2@test.com</email2>
-    <email3>testemail3_2@test.com</email3>
-    <groups>
-      <group reference="../../../user/groups/group"/>
-    </groups>
-  </user>
+    <user>
+        <firstname>FirstName 0</firstname>
+        <address>Address 0</address>
+        <lastname>LastName 0</lastname>
+        <homePhone>+7(900)372-17-25</homePhone>
+        <mobilePhone>+7(900)500-59-28</mobilePhone>
+        <workPhone>+7(900)874-32-89</workPhone>
+        <email1>testemail1_0@test.com</email1>
+        <email2>testemail2_0@test.com</email2>
+        <email3>testemail3_0@test.com</email3>
+        <groups>
+            <group>
+                <name>testGroupEdit1last</name>
+                <header>testHeader1Edit1last</header>
+                <footer>testFooter1Edit1last</footer>
+                <users class="org.hibernate.collection.internal.PersistentSet">
+                    <isTempSession>false</isTempSession>
+                    <initialized>false</initialized>
+                    <owner class="group" reference="../.."/>
+                    <cachedSize>-1</cachedSize>
+                    <role>ru.qa.learn.addressbook.model.GroupData.users</role>
+                    <key class="int">92</key>
+                    <dirty>false</dirty>
+                    <elementRemoved>false</elementRemoved>
+                    <allowLoadOutsideTransaction>false</allowLoadOutsideTransaction>
+                </users>
+            </group>
+        </groups>
+    </user>
+    <user>
+        <firstname>FirstName 1</firstname>
+        <address>Address 1</address>
+        <lastname>LastName 1</lastname>
+        <homePhone>+7(900)783-21-51</homePhone>
+        <mobilePhone>+7(900)264-04-93</mobilePhone>
+        <workPhone>+7(900)609-06-08</workPhone>
+        <email1>testemail1_1@test.com</email1>
+        <email2>testemail2_1@test.com</email2>
+        <email3>testemail3_1@test.com</email3>
+        <groups>
+            <group reference="../../../user/groups/group"/>
+        </groups>
+    </user>
+    <user>
+        <firstname>FirstName 2</firstname>
+        <address>Address 2</address>
+        <lastname>LastName 2</lastname>
+        <homePhone>+7(900)289-88-23</homePhone>
+        <mobilePhone>+7(900)621-25-08</mobilePhone>
+        <workPhone>+7(900)387-13-04</workPhone>
+        <email1>testemail1_2@test.com</email1>
+        <email2>testemail2_2@test.com</email2>
+        <email3>testemail3_2@test.com</email3>
+        <groups>
+            <group reference="../../../user/groups/group"/>
+        </groups>
+    </user>
 </list>
