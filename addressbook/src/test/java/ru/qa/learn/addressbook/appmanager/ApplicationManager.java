@@ -49,7 +49,7 @@ public class ApplicationManager {
                 wd = new EdgeDriver();
             }
         } else {
-            System.setProperty ("webdriver.chrome.driver", "C://JavaProg/chromedriver.exe");
+//            System.setProperty ("webdriver.chrome.driver", "C://JavaProg/chromedriver.exe");
             DesiredCapabilities capabilities = new DesiredCapabilities();
             capabilities.setBrowserName(browser);
             wd = new RemoteWebDriver(new URL(properties.getProperty("selenium.server")), capabilities);
