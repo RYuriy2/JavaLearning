@@ -11,8 +11,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import ru.qa.learn.addressbook.appmanager.ApplicationManager;
-import ru.qa.learn.addressbook.appmanager.DBHelper;
 import ru.qa.learn.addressbook.model.GroupData;
 import ru.qa.learn.addressbook.model.Groups;
 import ru.qa.learn.addressbook.model.UserData;
@@ -27,13 +25,13 @@ import java.util.List;
 
 public class UserDataGenerator extends TestBase {
 
-    @Parameter(names = "-c",description = "GroupsCount")
+    @Parameter(names = "-c", description = "GroupsCount")
     public int count;
 
-    @Parameter(names = "-f",description = "Target file")
+    @Parameter(names = "-f", description = "Target file")
     public String file;
 
-    @Parameter(names = "-d",description = "Data format")
+    @Parameter(names = "-d", description = "Data format")
     public String format;
     private SessionFactory sessionFactory;
 
@@ -42,7 +40,7 @@ public class UserDataGenerator extends TestBase {
         JCommander jCommander = new JCommander(generator);
         try {
             jCommander.parse(args);
-        } catch (ParameterException ex){
+        } catch (ParameterException ex) {
             jCommander.usage();
             return;
         }
@@ -51,12 +49,12 @@ public class UserDataGenerator extends TestBase {
 
     private void run() throws IOException {
         List<UserData> users = generateUsers(count);
-        if (format.equals("CSV") || format.equals("csv")){
-            saveAsCSV(users,new File(file));
-        }else if (format.equals("XML") || format.equals("xml")) {
-            saveAsXML(users,new File(file));
-        }else if (format.equals("JSON") || format.equals("json")) {
-            saveAsJSON(users,new File(file));
+        if (format.equals("CSV") || format.equals("csv")) {
+            saveAsCSV(users, new File(file));
+        } else if (format.equals("XML") || format.equals("xml")) {
+            saveAsXML(users, new File(file));
+        } else if (format.equals("JSON") || format.equals("json")) {
+            saveAsJSON(users, new File(file));
         } else {
             System.out.println("unrecognized format " + format);
         }
@@ -95,7 +93,7 @@ public class UserDataGenerator extends TestBase {
     private List<UserData> generateUsers(int count) throws IOException {
         connectDB();
         Groups groups = getGroups();
-        if (groups.size() == 0){
+        if (groups.size() == 0) {
             app.init();
             app.goTo().groupPage();
             app.group().create(new GroupData().withName("testnew"));
@@ -136,10 +134,10 @@ public class UserDataGenerator extends TestBase {
         sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
     }
 
-    private Groups getGroups(){
+    private Groups getGroups() {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-        List<GroupData> result = session.createQuery( "from GroupData" ).list();
+        List<GroupData> result = session.createQuery("from GroupData").list();
         session.getTransaction().commit();
         session.close();
         return new Groups(result);

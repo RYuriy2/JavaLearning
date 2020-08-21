@@ -5,12 +5,13 @@ import com.google.gson.reflect.TypeToken;
 import com.thoughtworks.xstream.XStream;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import ru.qa.learn.addressbook.model.GroupData;
-import ru.qa.learn.addressbook.model.Groups;
 import ru.qa.learn.addressbook.model.UserData;
 import ru.qa.learn.addressbook.model.Users;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -41,8 +42,8 @@ public class UserCreationTests extends TestBase {
                 }
                 fin = list;
             }
-        }else if (format.equals("XML") || format.equals("xml")) {
-            try (BufferedReader reader = new BufferedReader (new FileReader(file))) {
+        } else if (format.equals("XML") || format.equals("xml")) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
                 String xml = "";
                 String line = reader.readLine();
                 while (line != null) {
@@ -54,8 +55,8 @@ public class UserCreationTests extends TestBase {
                 List<UserData> users = (List<UserData>) xStream.fromXML(xml);
                 fin = users.stream().map((g) -> new Object[]{g}).collect(Collectors.toList());
             }
-        }else if (format.equals("JSON") || format.equals("json")) {
-            try (BufferedReader reader = new BufferedReader (new FileReader(file))) {
+        } else if (format.equals("JSON") || format.equals("json")) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
                 String json = "";
                 String line = reader.readLine();
                 while (line != null) {
@@ -88,9 +89,9 @@ public class UserCreationTests extends TestBase {
 
     }
 
-    @Test (enabled = false)
-    public void testCurrentDir(){
-        File currentDir = new File (".");
+    @Test(enabled = false)
+    public void testCurrentDir() {
+        File currentDir = new File(".");
         System.out.println(currentDir.getAbsoluteFile());
         File photo = new File("src/test/resources/test1.jpeg");
         System.out.println(photo.getAbsoluteFile());

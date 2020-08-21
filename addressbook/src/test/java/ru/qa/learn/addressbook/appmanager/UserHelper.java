@@ -39,9 +39,9 @@ public class UserHelper extends HelperBase {
         type(By.name("firstname"), userData.getFirstname());
         type(By.name("address"), userData.getAddress());
         type(By.name("lastname"), userData.getLastname());
-        type(By.name("home"),userData.getHomePhone());
+        type(By.name("home"), userData.getHomePhone());
         type(By.name("mobile"), userData.getMobilePhone());
-        type(By.name("work"),userData.getWorkPhone());
+        type(By.name("work"), userData.getWorkPhone());
         type(By.name("email"), userData.getEmail1());
         type(By.name("email2"), userData.getEmail2());
         type(By.name("email3"), userData.getEmail3());
@@ -57,12 +57,12 @@ public class UserHelper extends HelperBase {
 
 
     private void selectUserByID(int id) {
-        wd.findElement(By.cssSelector(String.format("input[id='%s']",id))).click();
+        wd.findElement(By.cssSelector(String.format("input[id='%s']", id))).click();
     }
 
 
     public void initEditUserByID(int id) {
-        wd.findElement(By.cssSelector(String.format("a[href='edit.php?id=%s']",id))).click();
+        wd.findElement(By.cssSelector(String.format("a[href='edit.php?id=%s']", id))).click();
     }
 
     public void edit(UserData user) {

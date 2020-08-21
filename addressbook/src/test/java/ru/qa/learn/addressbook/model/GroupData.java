@@ -31,7 +31,6 @@ public class GroupData {
     private String footer;
 
 
-
     @ManyToMany(mappedBy = "groups")
     private Set<UserData> users = new HashSet<UserData>();
 

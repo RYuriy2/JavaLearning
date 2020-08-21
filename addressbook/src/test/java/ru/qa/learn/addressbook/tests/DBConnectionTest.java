@@ -3,12 +3,13 @@ package ru.qa.learn.addressbook.tests;
 import org.testng.annotations.Test;
 import ru.qa.learn.addressbook.model.GroupData;
 import ru.qa.learn.addressbook.model.Groups;
+
 import java.sql.*;
 
 public class DBConnectionTest {
 
     @Test(enabled = false)
-    public void testDBConnection(){
+    public void testDBConnection() {
         Connection conn = null;
         try {
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/addressbook?" +
@@ -16,7 +17,7 @@ public class DBConnectionTest {
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery("select group_id,group_name,group_header,group_footer from group_list");
             Groups groups = new Groups();
-            while (rs.next()){
+            while (rs.next()) {
                 groups.add(new GroupData().withID(rs.getInt("group_id"))
                         .withName(rs.getString("group_name"))
                         .withHeader(rs.getString("group_header"))
@@ -26,7 +27,7 @@ public class DBConnectionTest {
             st.close();
             conn.close();
             System.out.println(groups);
-        } catch (SQLException ex){
+        } catch (SQLException ex) {
             System.out.println("SQLException: " + ex.getMessage());
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorErrod: " + ex.getErrorCode());
