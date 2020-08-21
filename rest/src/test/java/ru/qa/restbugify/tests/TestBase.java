@@ -25,10 +25,11 @@ public class TestBase {
     }
 
     public boolean isIssueOpen(int issueId) throws IOException {
-        Set<Issue> issues = app.rest().getIssues();                                                             //Получаем список issue
-        List<Issue> collect = issues.stream().filter(i -> i.getId() == issueId).collect(Collectors.toList());   //Выбираем из списка в отдельный список тот issue, у которого ID соответсвует заданному
-        Issue issue = collect.iterator().next();                                                                //Т.к. ID является уникальным, то в полученном выше списке всего 1 элемент, его и берём для дальнейшей обработки
-        return issue.getState() == 0 || issue.getState() == 1 || issue.getState() == 4;                         //Проверяем значение поля State (статус 0 - open, 1 - in dev, 4 - reopend) в отктытых статусах возвращает true иначе false
+        Set<Issue> issues = app.rest().getIssuesById(issueId);                                                             //Получаем список issue c заданным ID
+        Issue issue = issues.iterator().next();                                                                //Т.к. ID является уникальным, то в полученном выше списке всего 1 элемент, его и берём для дальнейшей обработки
+        return issue.getState_name().equals("Open")
+                || issue.getState_name().equals("In Progress")
+                || issue.getState_name().equals("Reopened");                         //Проверяем значение поля State_name в отктытых статусах возвращает true иначе false
     }
 
     public void skipIfNotFixed(int issueId) throws IOException {

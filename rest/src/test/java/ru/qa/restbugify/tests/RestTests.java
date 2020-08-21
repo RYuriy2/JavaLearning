@@ -19,7 +19,7 @@ public class RestTests extends TestBase {
     @Test
     public void testCreateIssue() throws IOException {
         skipIfNotFixed(90);
-        Set<Issue> oldIssues = app.rest().getIssues();
+        Set<Issue> oldIssues = app.rest().getIssuesById(90);
         Issue newIssue = new Issue().withSubject("Revin test REST").withDescription("New test issue");
         int issueId = app.rest().createIssue(newIssue);
         Set<Issue> newIssues = app.rest().getIssues();

@@ -42,6 +42,14 @@ public class RestHelper {
 
     }
 
+    public Set<Issue> getIssuesById(int issueId) throws IOException {
+        String json = getExecutor().execute(Request.Get(app.getProperty("bugify.baseURL")+"/issues/"+issueId+".json"))
+                .returnContent().asString();
+        JsonElement parsed = new JsonParser().parse(json);
+        JsonElement issues = parsed.getAsJsonObject().get("issues");
+        return new Gson().fromJson(issues, new TypeToken<Set<Issue>>(){}.getType());
+    }
+
 //    private void editIssue(int issueId) throws IOException {
 //        String url = "https://bugify.stqa.ru/api/issues/"+issueId+".json";
 //        getExecutor().execute(Request.Post(url)
