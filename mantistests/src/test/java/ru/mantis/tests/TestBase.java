@@ -6,6 +6,7 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import ru.mantis.appmanager.ApplicationManager;
 import ru.mantis.model.Resolution;
+import ru.mantis.model.Status;
 
 import javax.xml.rpc.ServiceException;
 import java.io.File;
@@ -27,10 +28,8 @@ public class TestBase {
     }
 
     public boolean isIssueOpen(int issueId) throws RemoteException, ServiceException, MalformedURLException {
-        Resolution resolution = app.soap().issueResolution(issueId);
-        if (resolution.getId() != 10) {
-            return false;
-        } else {return true;}
+        Status issueStatus = app.soap().issueStatus(issueId);
+        return issueStatus.getId() == 80 || issueStatus.getId() == 90;
     }
 
     public void skipIfNotFixed(int issueId) throws RemoteException, ServiceException, MalformedURLException {

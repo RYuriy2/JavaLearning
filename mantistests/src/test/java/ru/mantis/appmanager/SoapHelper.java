@@ -4,6 +4,7 @@ import biz.futureware.mantis.rpc.soap.client.*;
 import ru.mantis.model.Issue;
 import ru.mantis.model.Project;
 import ru.mantis.model.Resolution;
+import ru.mantis.model.Status;
 
 import javax.xml.rpc.ServiceException;
 import java.math.BigInteger;
@@ -57,11 +58,11 @@ public class SoapHelper {
     }
 
 
-    public Resolution issueResolution(int issueId) throws MalformedURLException, ServiceException, RemoteException {
+    public Status issueStatus(int issueId) throws MalformedURLException, ServiceException, RemoteException {
         MantisConnectPortType mc = getMantisConnect();
         ObjectRef issueResolution = mc.mc_issue_get(app.getProperty("web.login"),
                 app.getProperty("web.password"),
-                BigInteger.valueOf(issueId)).getResolution();
-        return  new Resolution().withtId(issueResolution.getId().intValue()).withName(issueResolution.getName());
+                BigInteger.valueOf(issueId)).getStatus();
+        return  new Status().withId(issueResolution.getId().intValue()).withName(issueResolution.getName());
     }
 }
