@@ -3,9 +3,9 @@
 <suite name="Suite1" verbose="1" >
     <test name="Groups" >
         <classes>
-            <class name="ru.qa.learn.addressbook.tests.GroupCreationTests" />
+<!--            <class name="ru.qa.learn.addressbook.tests.GroupCreationTests" />-->
             <class name="ru.qa.learn.addressbook.tests.GroupEditTests" />
-            <class name="ru.qa.learn.addressbook.tests.GroupDelitionTests" />
+<!--            <class name="ru.qa.learn.addressbook.tests.GroupDelitionTests" />-->
         </classes>
     </test>
 </suite>
